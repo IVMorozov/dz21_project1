@@ -1,5 +1,6 @@
 # created by virtualenv automatically
 .venv
-*__pycache__
+__pycache__
 notes/images/
 db.sqlite3
+barbershop.db
