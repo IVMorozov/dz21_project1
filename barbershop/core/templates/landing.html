@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Барбершоп "Дыня"</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    
+</head>
+<body>
+    <h1> Добро пожаловать в барбершоп "{{ name }}"!</h1>
+    <div class="menu_cont">
+        <p><a href="thanks/">Отзывы</a></p>
+        <p><a href="orders/">Записи</a></p>
+        <p><a href="orders/1">Запись к мастеру</a></p>
+    </div>
+    
+    <script src="{% static 'main.js' %}"></script>
+</body>
+</html>
+{% comment %} {% endblock %} {% endcomment %}

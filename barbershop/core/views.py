@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404 
 from django.http import HttpResponse
+# from .models import Post
 from django.db import connection
 from datetime import datetime
 
@@ -29,13 +30,14 @@ def orders_list(request):
     return render(request, 'orders_list.html', context)
 
 def order_detail(request, order_id):  
-
+    # app_id = request.GET.get(order_id)
     with connection.cursor() as cursor:
-        querry = f"SELECT * FROM appointments where id = {order_id}"
-        cursor.execute(querry)
+        quer = f"SELECT * FROM appointments where id = {order_id}"
+        cursor.execute(quer)
         row = cursor.fetchall()   
     context = {
         'app': row   
 	    }
 
     return render(request, 'order_detail.html', context)
+# 
