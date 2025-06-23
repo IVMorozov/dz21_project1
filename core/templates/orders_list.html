@@ -1,17 +1,24 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders_list</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-    
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <h1> Просмотр всех записей  </h1>
-    <p>{{ apps }}</p>
+    <div class="order_list">
+        <style>
+            text-align: center;
+            font-size: 12px; 
+        </style>
+        {% for app in apps %}
+        <p>
+            
+            Клиент: {{ app.0 }}<br>
+            Статус заявки: {{ app.1 }}<br>
+            <a href=" {{ link }}">Подробно</a>
+            
+
+        </p>
+        {% endfor %}
+    </div>
+
+
     
-    <script src="{% static 'main.js' %}"></script>
-</body>
-</html>
+{% endblock content %}
