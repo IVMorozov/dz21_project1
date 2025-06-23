@@ -28,14 +28,31 @@ def orders_list(request):
 	}  
     return render(request, 'orders_list.html', context)
 
-def order_detail(request, order_id):  
 
+def masters_list(request):  
     with connection.cursor() as cursor:
-        querry = f"SELECT * FROM appointments where id = {order_id}"
-        cursor.execute(querry)
-        row = cursor.fetchall()   
-    context = {
-        'app': row   
-	    }
+        cursor.execute("SELECT * FROM masters")
+        row = cursor.fetchall()           
 
+    context = {
+        'masters': row
+	}  
+    return render(request, 'masters_list.html', context)
+
+def order_detail(request, order_id):  
+    try:
+        with connection.cursor() as cursor:
+            querry = f"SELECT * FROM appointments where id = {order_id}"
+            cursor.execute(querry)
+            row = cursor.fetchall() 
+        context = {
+            'app': row   
+        }  
+        
+    except IndexError:
+        context = {
+            'app':HttpResponse("Запись не найдена", status=404)   
+        }
+        return context
+    
     return render(request, 'order_detail.html', context)
