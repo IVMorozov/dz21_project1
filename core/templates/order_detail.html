@@ -2,7 +2,25 @@
 
 {% block content %}
     <h1> Просмотр деталей по записи клиента </h1>
-    <p>{{ app }}</p>
+    <div class="row-g3">        
+        {% for app in order_details %}
+            {% comment %} <div.col-12 col-md-6 col-lf-4> {% endcomment %}
+                <div class="appointment_card">
+                    Услуга: {{ app.1 }}<br>
+                    Описание услуги: {{ app.2 }}<br>                    
+                    Цена: {{ app.3 }}<br>
+                </div>
+                <br>
+            {% comment %} </div> {% endcomment %}
+        {% endfor %}  
+        <div class="appointment_card">
+            Стоимость: <span class="badge bg-primary"> {{ order_sum.1 }}</span><br>
+            <br>
+        </div>
+        <a href=" {% url 'orders_list' %}"><< Назад</a>
+        {% comment %} <div class="badge bg-primary">Стоимость: {{ order_sum.1 }} </div>  {% endcomment %}
+    </div>
+
 
 
     

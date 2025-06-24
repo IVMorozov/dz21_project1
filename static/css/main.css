@@ -27,14 +27,13 @@ footer {
 }
 
 .menu_head {
-    display: flex;
-    justify-content: center;
-    
-    align-items: center;
-    height: 170px;
     background: black;
     color: white;
-    font-size: 48px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    align-items: center;    
 };
 
 .menu_cont {    
@@ -48,11 +47,7 @@ footer {
     font-size: 10px;
 };
 
-.anti_footer {
-    min-height: 100px;
-    font-size: 50 px;
-    color: rgb(83, 42, 42);
-}
+
 
 
 

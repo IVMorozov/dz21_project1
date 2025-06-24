@@ -39,12 +39,28 @@ def about(request):
 
 def orders_list(request):  
     with connection.cursor() as cursor:
-        cursor.execute("SELECT client_name, status, date  FROM appointments")
-        row = cursor.fetchall()           
+        
+        querry = f"SELECT a.id, client_name,  client_phone, date, status, count(s.title)  FROM appointments a  JOIN appointments_services a_s on a.id = a_s.appointment_id JOIN services s on a_s.service_id = s.id GROUP BY a.id, a.client_name, a.client_phone, a.date, a.status"
+        
+        cursor.execute(querry)
+        row = cursor.fetchall() 
+            
+        # querry2 = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {a.id}"
+
+        # cursor.execute(querry2)
+        # row2 = cursor.fetchall() 
+
+        # querry3 = f"SELECT a_s.appointment_id,  sum(price) FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {a.id}"
+
+        # cursor.execute(querry3)
+        # row3 = cursor.fetchone() 
+        
 
     context = {
         'apps': row,
-        'title': 'Список записей'
+        # 'order_details': row2,
+        # 'order_sum': row3, 
+        'title': 'Барбершоп Дыня'
 	}  
     return render(request, 'orders_list.html', context)
 
@@ -72,12 +88,20 @@ def services_list(request):
 
 def order_detail(request, order_id):  
     try:
-        with connection.cursor() as cursor:
-            querry = f"SELECT * FROM appointments where id = {order_id}"
+        with connection.cursor() as cursor:            
+            querry = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
+
             cursor.execute(querry)
             row = cursor.fetchall() 
+
+            querry1 = f"SELECT a_s.appointment_id,  sum(price) FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
+
+            cursor.execute(querry1)
+            row1 = cursor.fetchone() 
+
         context = {
-            'app': row,
+            'order_details': row,
+            'order_sum': row1,            
             'title': 'Барбершоп Дыня'   
         }  
         
@@ -89,3 +113,4 @@ def order_detail(request, order_id):
         return context
     
     return render(request, 'order_detail.html', context)
+

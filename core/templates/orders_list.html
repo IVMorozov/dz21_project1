@@ -2,18 +2,26 @@
 
 {% block content %}
 <div class="row">
-    <h1> {{ title }}  </h1>
-</div>
+    <h1> Просмотр записей клиентов  </h1>
+</div> 
 <div class="row-g3">        
         {% for app in apps %}
             {% comment %} <div.col-12 col-md-6 col-lf-4> {% endcomment %}
                 <div class="appointment_card">
-                    Клиент: {{ app.0 }}<br>
-                    Статус заявки: {{ app.1 }}<br>
-                    Дата заявки: {{ app.2 }}<br>
-                    Услуги: <br>
-                    <a href=" {{ link }}">Подробно</a>
+                    Клиент: {{ app.1 }}<br>
+                    Телефон клиента: {{ app.2 }}<br>                    
+                    Дата заявки: {{ app.3 }}<br>
+                    Статус заявки: {{ app.4 }}<br>
+                    Количество услуг -  {{ app.5 }}<br>
+
+                    {% comment %} {% for service in app.4  %}
+                        <span>{{ service }} </span>
+                        
+                    {% endfor %} {% endcomment %}
+                    {% comment %} {% include "order_detail.html" %} {% endcomment %}
+                    <a href=" {% url 'order_detail' app.0 %}">Подробно</a>
                 </div>
+                <br>
             {% comment %} </div> {% endcomment %}
         {% endfor %}    
 </div>
