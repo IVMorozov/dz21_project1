@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1> Просмотр всех записей  </h1>
-    <div class="order_list">        
+<div class="row">
+    <h1> {{ title }}  </h1>
+</div>
+<div class="row-g3">        
         {% for app in apps %}
-        <p>
-            
-            Клиент: {{ app.0 }}<br>
-            Статус заявки: {{ app.1 }}<br>
-            <a href=" {{ link }}">Подробно</a>
-            
-
-        </p>
-        {% endfor %}
-    </div>
-
+            {% comment %} <div.col-12 col-md-6 col-lf-4> {% endcomment %}
+                <div class="appointment_card">
+                    Клиент: {{ app.0 }}<br>
+                    Статус заявки: {{ app.1 }}<br>
+                    Дата заявки: {{ app.2 }}<br>
+                    Услуги: <br>
+                    <a href=" {{ link }}">Подробно</a>
+                </div>
+            {% comment %} </div> {% endcomment %}
+        {% endfor %}    
+</div>
 
     
 {% endblock content %}

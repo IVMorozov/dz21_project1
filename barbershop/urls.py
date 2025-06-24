@@ -27,4 +27,7 @@ urlpatterns = [
     path('orders/', views.orders_list, name='orders_list'),
     path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
     path('masters/', views.masters_list, name='masters_list'),
+    path('services/', views.services_list, name='services_list'),
+    path('about/', views.about, name='about'),
+    path('make_appointment/', views.make_appointment, name='make_appointment'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

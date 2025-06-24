@@ -8,8 +8,12 @@
     </div>    
     <div class="menu_cont">
         <p><a href="thanks/">Отзывы</a></p>
-        <p><a href="orders/">Записи</a></p>
+        {% if user.is_stuff %}
+            <p><a href="orders/">Список записей</a></p>            
+        {% endif %}        
         <p><a href="orders/1">Запись к мастеру</a></p>
+
+
     </div>
 
 {% endblock content %}

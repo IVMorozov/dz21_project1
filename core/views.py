@@ -7,27 +7,46 @@ from datetime import datetime
 # Create your views here.
 def landing(request):  
     context = {
-        'name': "Дыня"
+        "user": {
+            "name": "Илья",
+            "is_stuff": True
+        },
+        'name': "Дыня",
+        'title': 'Барбершоп Дыня'
 	}    
     return render(request, 'landing.html', context)
 
-
 def thanks(request):  
     context = {
-        'name': "Дыня"
+        'name': "Дыня",
+        'title': 'Барбершоп Дыня'
 	}  
     return render(request, 'thanks.html', context)
 
+def make_appointment(request):  
+    context = {
+        'name': "Дыня",
+        'title': 'Барбершоп Дыня'
+	}  
+    return render(request, 'make_appointment.html', context)
+
+def about(request):  
+    context = {
+        'name': "Дыня",
+        'title': 'Барбершоп Дыня'
+	}  
+    return render(request, 'about.html', context)
+
 def orders_list(request):  
     with connection.cursor() as cursor:
-        cursor.execute("SELECT client_name, status FROM appointments")
+        cursor.execute("SELECT client_name, status, date  FROM appointments")
         row = cursor.fetchall()           
 
     context = {
-        'apps': row
+        'apps': row,
+        'title': 'Список записей'
 	}  
     return render(request, 'orders_list.html', context)
-
 
 def masters_list(request):  
     with connection.cursor() as cursor:
@@ -35,9 +54,21 @@ def masters_list(request):
         row = cursor.fetchall()           
 
     context = {
-        'masters': row
+        'masters': row,
+        'title': 'Барбершоп Дыня'
 	}  
     return render(request, 'masters_list.html', context)
+
+def services_list(request):  
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM services")
+        row = cursor.fetchall()           
+
+    context = {
+        'services': row,
+        'title': 'Барбершоп Дыня'
+	}  
+    return render(request, 'services.html', context)
 
 def order_detail(request, order_id):  
     try:
@@ -46,12 +77,14 @@ def order_detail(request, order_id):
             cursor.execute(querry)
             row = cursor.fetchall() 
         context = {
-            'app': row   
+            'app': row,
+            'title': 'Барбершоп Дыня'   
         }  
         
     except IndexError:
         context = {
-            'app':HttpResponse("Запись не найдена", status=404)   
+            'app':HttpResponse("Запись не найдена", status=404) ,
+            'title': 'Барбершоп Дыня'  
         }
         return context
     

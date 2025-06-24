@@ -1,21 +1,29 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+<div class="masters">
     <h1> Наши мастера с удовольствием примут Вас!  </h1>
-    <div class="order_list">
-        
+    <br>
+    {% comment %} <div class="card_block" style="width: 28rem;"> {% endcomment %}
+    <div class="row row-cols-1 row-cols-md-4 g-4 ">
         {% for master in masters %}
-        <p>
-            
-            Мастер: {{ master.1 }} {{ master.2 }} {{ master.3 }}<br>
-            Телефон: {{ master.4 }}<br>
-            <a href=" {{ link }}">Записаться</a>
-            
-
-        </p>
+        <div class="col">
+            <div class="card">
+                <img src="{% static 'images\user.svg' %}" class="card-img-top" alt="..." style="width: 128px;">
+                <div class="card-body">
+                    <h5 class="card-title">Мастер</h5>
+                    <p class="card-text">            
+                        {{ master.1 }} {{ master.2 }} {{ master.3 }}<br>
+                        Телефон: {{ master.4 }}<br>
+                        <br>
+                        <a href=" {{ link }}" class="btn btn-primary">Записаться</a>      
+                    </p>
+                </div>
+            </div>
+        </div>    
         {% endfor %}
+        
     </div>
+</div> 
 
-
-    
 {% endblock content %}

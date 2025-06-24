@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> Наши услуги  </h1>
+    <div class="order_list">
+        
+        {% for service  in services %}
+        <p>
+            
+            Услуга: {{ service.1 }} <br>
+            Оптсание: {{ service.2 }} <br>
+            Цена: {{ service.3 }} <br>            
+            <a href=" {{ link }}">Подробно</a>
+            
+
+        </p>
+        {% endfor %}
+    </div>
+
+
+    
+{% endblock content %}
