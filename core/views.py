@@ -15,6 +15,7 @@ from django.urls import reverse
 #         {'name': "Запись", 'url': 'make_appointment'},
 #     ]
 
+
 def landing(request):  
     context = {
         "user": {
