@@ -1,13 +1,21 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
-    <h2> Собственно, о нас... </h2>
-    <h1>  Барбершоп "{{ name }}"</h1>
-    <br>
-    <br>
-    <br>
-    <br>
-    <p> С уважением, барбершоп "{{ name }}"<p>
+    <section id="about" class="row my-5 py-5">
+        <div class="col-md-8">
+            <img src="{% static 'images\master.jpg' %}" alt="Наш барбершоп" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-4">
+            <h2 class="mb-4">О нас</h2>
+            <ul class="list-unstyled">
+                <li class="mb-3"><i class="bi bi-scissors fs-4 me-2 text-primary"></i> Профессиональные мастера с опытом работы</li>
+                <li class="mb-3"><i class="bi bi-award fs-4 me-2 text-primary"></i> Только качественные материалы и инструменты</li>
+                <li class="mb-3"><i class="bi bi-emoji-smile fs-4 me-2 text-primary"></i> Уютная атмосфера и кофе в подарок</li>
+                <li class="mb-3"><i class="bi bi-clock fs-4 me-2 text-primary"></i> Работаем без выходных с 10:00 до 22:00</li>
+                <li class="mb-3"><i class="bi bi-geo-alt fs-4 me-2 text-primary"></i> Удобное расположение в центре города</li>
+            </ul>
+        </div>
+    </section>
 
 
     

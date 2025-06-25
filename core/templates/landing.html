@@ -7,11 +7,74 @@
         <h1>Добро пожаловать в барбершоп "{{ name }}"!</h1>
     </div>    
     <div class="menu_cont">
-        <p><a href="thanks/">Отзывы</a></p>
-        {% if user.is_stuff %}
-            <p><a href="orders/">Список записей</a></p>            
-        {% endif %}        
-        <p><a href="orders/1">Запись к мастеру</a></p>
+        <p><a href="thanks/">Благодарность за поданную заявку (тест)</a></p>
+        
+    <!-- Секция О нас -->
+    <section id="about" class="row my-5 py-5">
+        <div class="col-md-8">
+            <img src="{% static 'images/main image.jpg' %}" alt="Наш барбершоп" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-4">
+            <h2 class="mb-4">Мы предлагаем</h2>
+            <ul class="list-unstyled">
+                <li class="mb-3"><i class="bi bi-scissors fs-4 me-2 text-primary"></i> Профессиональные мастера с опытом работы</li>
+                <li class="mb-3"><i class="bi bi-award fs-4 me-2 text-primary"></i> Только качественные материалы и инструменты</li>
+                <li class="mb-3"><i class="bi bi-emoji-smile fs-4 me-2 text-primary"></i> Уютная атмосфера и кофе в подарок</li>
+                <li class="mb-3"><i class="bi bi-clock fs-4 me-2 text-primary"></i> Работаем без выходных с 10:00 до 22:00</li>
+                <li class="mb-3"><i class="bi bi-geo-alt fs-4 me-2 text-primary"></i> Удобное расположение в центре города</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Секция Преимущества -->
+    <section id="benefits" class="row my-5 py-5 bg-light rounded">
+        <div class="col-12 text-center mb-4">
+            <h2>Наши преимущества</h2>
+        </div>
+        <div class="col-md-2 text-center mb-4">
+            <i class="bi bi-speedometer2 fs-1 text-primary mb-3"></i>
+            <h5>Скорость</h5>
+            <p>Ценим ваше время</p>
+        </div>
+        <div class="col-md-2 text-center mb-4">
+            <i class="bi bi-shield-check fs-1 text-primary mb-3"></i>
+            <h5>Качество</h5>
+            <p>Гарантия результата</p>
+        </div>
+        <div class="col-md-2 text-center mb-4">
+            <i class="bi bi-cash-coin fs-1 text-primary mb-3"></i>
+            <h5>Цена</h5>
+            <p>Доступные тарифы</p>
+        </div>
+        <div class="col-md-2 text-center mb-4">
+            <i class="bi bi-emoji-smile fs-1 text-primary mb-3"></i>
+            <h5>Атмосфера</h5>
+            <p>Комфорт и уют</p>
+        </div>
+        <div class="col-md-2 text-center mb-4">
+            <i class="bi bi-gem fs-1 text-primary mb-3"></i>
+            <h5>Премиум</h5>
+            <p>Лучшие материалы</p>
+        </div>
+        <div class="col-md-2 text-center mb-4">
+            <i class="bi bi-people fs-1 text-primary mb-3"></i>
+            <h5>Мастерство</h5>
+            <p>Опытные барберы</p>
+        </div>
+    </section>
+
+    
+
+   
+
+    <!-- Секция Запись -->
+    <section id="booking" class="row my-5 py-5 text-center">
+        <div class="col-12">
+            <h2 class="mb-4">Готовы преобразиться?</h2>
+            <p class="mb-4">Запишитесь на услугу прямо сейчас и получите скидку 10% на первое посещение!</p>
+            {% comment %} <a href="{% url 'order_create' %}" class="btn btn-dark btn-lg">Записаться на услугу</a> {% endcomment %}
+        </div>
+    </section>
 
 
     </div>

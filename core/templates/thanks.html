@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+    <meta http-equiv="refresh" content="3;url={% url 'landing' %}">
+{% endblock extra_head %}
+
+
 {% block content %}
     <h2> спасибо за заявку!</h2>
     <h2> С уважением, барберщоп "{{ name }}"</h2>
 
 
-    
+    <a href=" {% url 'landing' %}"><< Назад</a>
 {% endblock content %}

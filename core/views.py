@@ -2,15 +2,26 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import connection
 from datetime import datetime
+from django.urls import reverse
 
 
 # Create your views here.
+# def get_main_menu():
+#     return[
+#         {'name': "Главная", 'url':'landing'},
+#         {'name': "О нас", 'url': 'about'},
+#         {'name': "Услуги", 'url': 'services_list'},
+#         {'name': "Мастера", 'url': 'masters_list'},
+#         {'name': "Запись", 'url': 'make_appointment'},
+#     ]
+
 def landing(request):  
     context = {
         "user": {
             "name": "Илья",
             "is_stuff": True
         },
+        
         'name': "Дыня",
         'title': 'Барбершоп Дыня'
 	}    
@@ -45,10 +56,10 @@ def orders_list(request):
         cursor.execute(querry)
         row = cursor.fetchall() 
             
-        # querry2 = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {a.id}"
+        querry2 = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id"
 
-        # cursor.execute(querry2)
-        # row2 = cursor.fetchall() 
+        cursor.execute(querry2)
+        row2 = cursor.fetchall() 
 
         # querry3 = f"SELECT a_s.appointment_id,  sum(price) FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {a.id}"
 
@@ -58,7 +69,7 @@ def orders_list(request):
 
     context = {
         'apps': row,
-        # 'order_details': row2,
+        'order_details': row2,
         # 'order_sum': row3, 
         'title': 'Барбершоп Дыня'
 	}  
@@ -70,6 +81,7 @@ def masters_list(request):
         row = cursor.fetchall()           
 
     context = {
+        
         'masters': row,
         'title': 'Барбершоп Дыня'
 	}  

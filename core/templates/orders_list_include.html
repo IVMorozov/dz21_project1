@@ -1,20 +1,15 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="row">
-    <h1> Просмотр записей клиентов  </h1>
-</div> 
-{% include "orders_list_include.html" %}
-{% comment %} <div class="row row-cols-1 row-cols-md-4 g-4">        
+{% load static %}
+<div class="row row-cols-1 row-cols-md-4 g-4">        
         {% for app in apps %}
-            
+            {% comment %} <div.col-12 col-md-6 col-lf-4> {% endcomment %}
                 <div class="appointment_card card">
                     Клиент: {{ app.1 }}<br>
                     Телефон клиента: {{ app.2 }}<br>                    
                     Запись оформлена: {{ app.3 }}<br>
+
                     Количество услуг -  {{ app.5 }}<br>
                     
-                    Услуги:
+                    <b>Услуги:</b>
                     {% for service in order_details  %}
                         {% if service.0 == app.0 %}
                             <ul>
@@ -34,13 +29,10 @@
                     {% else %}
                         <span class="badge bg-danger"> Статус заявки: {{ app.4 }}</span><br>
                     {% endif %}
-                    
+                    {% comment %} {% include "order_detail.html" with a.id= app.0 %} {% endcomment %}
                     
                 </div>
                 <br>
-            
+            {% comment %} </div> {% endcomment %}
         {% endfor %}    
-</div> {% endcomment %}
-
-    
-{% endblock content %}
+</div>
