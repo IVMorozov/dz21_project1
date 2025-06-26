@@ -39,10 +39,4 @@ service = Service.objects.create(name= "'Викинг'", description="Плете
 
 service = Service.objects.create(name= "Полировка лысины", description="Полировка лысины до блеска", price=1900, duration=15 )
 
-class Task(models.Model):  
-    STATUS_NEW = 'NEW'  
-    STATUS_IN_PROGRESS = 'IN_PROGRESS'  
-    STATUS_COMPLETED = 'COMPLETED'  
-    STATUS_CHOICES = [ (STATUS_NEW, 'New'), (STATUS_IN_PROGRESS, 'In Progress'), (STATUS_COMPLETED, 'Completed'), ]  
-    title = models.CharField(max_length=200)  
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_NEW)  
+ 
