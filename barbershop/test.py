@@ -13,10 +13,7 @@ order = Order.objects.create(client_name= "Пётр 'Безголовый' Го�
 master = Master.objects.get(pk=1)
 order.master=master
 
-services = Service.objects.get(pk=1)
-order.services=services
 
-order.save()
 
 
 service = Service.objects.create(name= "'Горшок'", description="Стрижка под 'Горшок'", price=1000, duration=40 )
@@ -38,5 +35,3 @@ service = Service.objects.create(name= "'Ветер в голове'", descripti
 service = Service.objects.create(name= "'Викинг'", description="Плетение косичек 'Викинг'", price=1800, duration=120 )
 
 service = Service.objects.create(name= "Полировка лысины", description="Полировка лысины до блеска", price=1900, duration=15 )
-
- 

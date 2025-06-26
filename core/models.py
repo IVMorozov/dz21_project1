@@ -71,18 +71,12 @@ class Order(models.Model):
 
     
 class Review(models.Model):
-    TERRIBLE = "УЖАСНО"  
-    BAD = "ПЛОХО" 
-    NORMAL = "НОРМАЛЬНО" 
-    GOOD = "ХОРОШО" 
-    FINE = "ОТЛИЧНО" 
 
     TERRIBLE = 1  
     BAD = 2 
     NORMAL = 3 
     GOOD = 4 
     FINE = 5 
-
 
     RATING_CHOICES = [
         (TERRIBLE, "Ужасно"),
