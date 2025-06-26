@@ -12,7 +12,12 @@ class Service(models.Model):
     image = models.ImageField (upload_to="services/", blank=True, verbose_name="Изображение")
 
     def __str__(self):
-        return self
+        return f"{self.description}"
+    
+    class Meta:
+        verbose_name = "Услуга"
+        verbose_name_plural = "Список услуг"
+        ordering = ['description']
     
 class Master(models.Model):
     name = models.CharField (max_length=150, verbose_name="Имя мастера")
@@ -28,17 +33,20 @@ class Master(models.Model):
     
     class Meta:
         verbose_name = "Мастер"
-        verbose_name_plural = "Мастера"
+        verbose_name_plural = "Список Мастеров"
         ordering = ['name']
 
 class Order(models.Model): 
+    STATUS_NEW = "НОВАЯ"
+    STATUS_CONFIRMED = "ПОДТВЕРЖДЕННАЯ"
+    STATUS_CANCELLED = "ОТМЕНЕННАЯ"
+    STATUS_COMPLETED = "ВЫПОЛЕННАЯ"
 
     STATUS_CHOICES = [
-        (1, "новая"),
-        (2, "подтвержденная"),
-        (3, "отмененная"),
-        (4, "выполненная"),
-        
+        (STATUS_NEW, "новая"),
+        (STATUS_CONFIRMED, "подтвержденная"),
+        (STATUS_CANCELLED, "отмененная"),
+        (STATUS_COMPLETED, "выполненная"),        
     ]
     client_name = models.CharField (max_length=100, verbose_name="Имя клиента")
     phone = models.CharField (max_length=20, verbose_name="Телефон клиента")
@@ -53,17 +61,35 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.client_name}, {self.phone}, {self.appointment_date}"
     
+    class Meta:
+        verbose_name = "Запись"
+        verbose_name_plural = "Список записей"
+        ordering = ['appointment_date']
+    
 
 
 
     
 class Review(models.Model):
+    TERRIBLE = "УЖАСНО"  
+    BAD = "ПЛОХО" 
+    NORMAL = "НОРМАЛЬНО" 
+    GOOD = "ХОРОШО" 
+    FINE = "ОТЛИЧНО" 
+
+    TERRIBLE = 1  
+    BAD = 2 
+    NORMAL = 3 
+    GOOD = 4 
+    FINE = 5 
+
+
     RATING_CHOICES = [
-        (1, "Ужасно"),
-        (2, "Плохо"),
-        (3, "Нормально"),
-        (4, "Хорошо"),
-        (5, "Отлично"),
+        (TERRIBLE, "Ужасно"),
+        (BAD, "Плохо"),
+        (NORMAL, "Нормально"),
+        (GOOD, "Хорошо"),
+        (FINE, "Отлично"),
     ]
     text = models.TextField (verbose_name="Текст отзыва")
     client_name = models.CharField (max_length=100, blank=True, verbose_name="Имя клиента")
@@ -74,4 +100,9 @@ class Review(models.Model):
     is_published = models.BooleanField (default=True, verbose_name="Опубликован")
 
     def __str__(self):
-        return self
+        return f"{self.rating}, {self.master}, {self.client_name}"
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Список отзывов"
+        ordering = ['master']
