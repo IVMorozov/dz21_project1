@@ -9,13 +9,15 @@
         {% for master in masters %}
         <div class="col">
             <div class="card">
-                <img src="{% static '' %}images\{{ master.5 }}" " class="card-img-top" alt="..." style="width: 128px;">
-                {% comment %} {% static '' %}volumes/{{ context.number }}.nxs {% endcomment %}
-                <div class="card-body">
+                <img src="{{ master.photo.url }}"  class="card-img-top" alt="..." style="width: 128px;">
+                {% comment %} <img src="{% static '' %}images\{{ master.5 }}"  class="card-img-top" alt="..." style="width: 128px;"> {% endcomment %}
+                    <div class="card-body">
                     <h5 class="card-title">Мастер</h5>
                     <p class="card-text">            
-                        {{ master.1 }} {{ master.2 }} {{ master.3 }}<br>
-                        Телефон: {{ master.4 }} <br>
+                        {{ master.name }} <br>
+                        <br>
+                        Опыт работы: {{ master.experience }} <br>
+                        Телефон: {{ master.phone }} <br>
                         <br>
                         <a href=" {{ link }}" class="btn btn-primary">Записаться</a>      
                     </p>

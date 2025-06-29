@@ -6,7 +6,9 @@ def get_main_menu(request):
             {'name': "О нас", 'url': 'about'},
             {'name': "Услуги", 'url': 'services_list'},
             {'name': "Мастера", 'url': 'masters_list'},
-            {'name': "Запись", 'url': 'make_appointment'},
+            {'name': "Отзывы", 'url': 'reviews'},
+            {'name': "Запись", 'url': 'make_appointment'},           
+
         ]
     }
     return context

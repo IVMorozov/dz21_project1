@@ -2,19 +2,30 @@
 
 {% block content %}
     <h1> Просмотр деталей по записи клиента </h1>
-    <div class="row-g3">        
-        {% for app in order_details %}
-            {% comment %} <div.col-12 col-md-6 col-lf-4> {% endcomment %}
-                <div class="appointment_card">
-                    Услуга: {{ app.1 }}<br>
-                    Описание услуги: {{ app.2 }}<br>                    
-                    Цена: {{ app.3 }}<br>
-                </div>
-                <br>
-            {% comment %} </div> {% endcomment %}
-        {% endfor %}  
+    <div class="row-g3"> 
+        <b>Мастер:</b> {{ master }}<br>
+        <br>
+        <b>Инфо о клиенте:</b><br>
+        {% for cl_info in client  %}
+        Имя: {{ cl_info.client_name }}<br> 
+        Телефон: {{ cl_info.phone }}<br> 
+        Записан на: {{ cl_info.appointment_date }}<br> 
+        {% endfor %} 
+        <br>
+        <h5><b>Услуги:  </b></h5>    
+        {% for service in item_list  %}
+            <div class="appointment_card"> 
+                Услуга: {{ service.name }}<br>
+                Описание услуги: {{ service.description }}<br>                    
+                Цена: {{ service.price }}<br>
+            </div>
+            <br>
+
+        {% endfor %}
+
+
         <div class="appointment_card">
-            Стоимость: <span class="badge bg-primary"> {{ order_sum.1 }}</span><br>
+            <h5><b>Стоимость:  </b> <span class="badge bg-primary"> {{ order_sum }}</span></h5><br>
             <br>
         </div>
         <a href=" {% url 'orders_list' %}"><< Назад</a>

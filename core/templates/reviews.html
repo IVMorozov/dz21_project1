@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> Отзывы наших клиентов  </h1>
+    <div class="row row-cols-1 row-cols-md-4 g-4 ">
+        
+        {% for review  in reviews %}
+            <div class="col">
+                <div class="card px-2 bg-warning-subtle" style="height:350px">
+                
+                    
+                    <b>Клиент</b> {{ review.client_name }} <br>
+                    <b>Мастер</b> {{ review.master }} <br><br>
+                    <span class="mx-auto"><b>Текст отзыва</b></span> 
+                    <div class="card p-2 bg-secondary-subtle" style="height:200px">{{ review.text }} </div>
+
+                    {% comment %} <span><b>Оценка:</b> <span>{{ review.rating }} </span><br>  </span>  {% endcomment %}
+                    <div class="mx-auto my-2"><b>Оценка </b>
+                        {% if  review.rating == 1 %}
+                            <span class="badge bg-danger">{{ review.rating }} </span><br>  
+                        {% elif review.rating == 2 %}
+                            <span class="badge bg-danger">{{ review.rating }} </span><br> 
+                        {% elif review.rating == 3 %}
+                            <span class="badge bg-warning text-dark">{{ review.rating }} </span><br>  
+                        {% elif review.rating == 4 %}
+                            <span class="badge bg-success">{{ review.rating }} </span><br> 
+                        {% elif review.rating == 5 %}
+                            <span class="badge bg-success">{{ review.rating }} </span><br>  
+                        {% endif %} 
+                    </div>        
+                    {% comment %} <a href=" {{ link }}">Подробно</a> {% endcomment %}
+                    
+
+                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+    
+{% endblock content %}

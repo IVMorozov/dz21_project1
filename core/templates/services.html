@@ -5,18 +5,13 @@
     <div class="order_list">
         
         {% for service  in services %}
-        <p>
-            
-            Услуга: {{ service.1 }} <br>
-            Оптсание: {{ service.2 }} <br>
-            Цена: {{ service.3 }} <br>            
+        <p>            
+            Услуга: {{ service.name }} <br>
+            Оптсание: {{ service.description }} <br>
+            Цена: {{ service.price }} <br>            
             <a href=" {{ link }}">Подробно</a>
-            
-
         </p>
         {% endfor %}
     </div>
-
-
     
 {% endblock content %}

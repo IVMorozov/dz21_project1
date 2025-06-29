@@ -29,5 +29,10 @@ urlpatterns = [
     path('masters/', views.masters_list, name='masters_list'),
     path('services/', views.services_list, name='services_list'),
     path('about/', views.about, name='about'),
+    path('reviews/', views.reviews, name='reviews'),
     path('make_appointment/', views.make_appointment, name='make_appointment'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

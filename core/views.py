@@ -3,6 +3,13 @@ from django.http import HttpResponse
 from django.db import connection
 from datetime import datetime
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
+from pickle import FLOAT
+from token import NAME, STRING
+from django.db.models import Q,  Sum, Count
+from .models import Order, Review, Master, Service
+
 
 
 # Create your views here.
@@ -16,13 +23,9 @@ from django.urls import reverse
 #     ]
 
 
-def landing(request):  
+def landing(request): 
+
     context = {
-        "user": {
-            "name": "Илья",
-            "is_stuff": True
-        },
-        
         'name': "Дыня",
         'title': 'Барбершоп Дыня'
 	}    
@@ -49,81 +52,87 @@ def about(request):
 	}  
     return render(request, 'about.html', context)
 
-def orders_list(request):  
-    with connection.cursor() as cursor:
-        
-        querry = f"SELECT a.id, client_name,  client_phone, date, status, count(s.title)  FROM appointments a  JOIN appointments_services a_s on a.id = a_s.appointment_id JOIN services s on a_s.service_id = s.id GROUP BY a.id, a.client_name, a.client_phone, a.date, a.status"
-        
-        cursor.execute(querry)
-        row = cursor.fetchall() 
-            
-        querry2 = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id"
 
-        cursor.execute(querry2)
-        row2 = cursor.fetchall() 
 
-        # querry3 = f"SELECT a_s.appointment_id,  sum(price) FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {a.id}"
+def masters_list(request):     
+    query = Master.objects.all()        
 
-        # cursor.execute(querry3)
-        # row3 = cursor.fetchone() 
-        
-
-    context = {
-        'apps': row,
-        'order_details': row2,
-        # 'order_sum': row3, 
-        'title': 'Барбершоп Дыня'
-	}  
-    return render(request, 'orders_list.html', context)
-
-def masters_list(request):  
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM masters")
-        row = cursor.fetchall()           
-
-    context = {
-        
-        'masters': row,
-        'title': 'Барбершоп Дыня'
+    context = {        
+        'masters': query,
+        'title': 'Барбершоп Дыня',
 	}  
     return render(request, 'masters_list.html', context)
 
 def services_list(request):  
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM services")
-        row = cursor.fetchall()           
+    query = Service.objects.all()
 
     context = {
-        'services': row,
+        'services': query,
         'title': 'Барбершоп Дыня'
-	}  
+	}     
     return render(request, 'services.html', context)
 
+@login_required(login_url='/')
+def orders_list(request): 
+    query = Order.objects.all().order_by('-date_created')  
+
+    context = {
+        'orders': query,
+        'title': 'Барбершоп Дыня'
+	}     
+    return render(request, 'orders_list.html', context)
+
+@login_required(login_url='/')
 def order_detail(request, order_id):  
-    try:
-        with connection.cursor() as cursor:            
-            querry = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
 
-            cursor.execute(querry)
-            row = cursor.fetchall() 
+    query = Order.objects.filter(id = order_id)
+    item_list = Service.objects.filter(orders__in=query)
+    order_sum = Service.objects.filter(orders__in=query).aggregate(ord_sum=Sum('price'))
+    master = Master.objects.filter(orders__in=query)
+    master = master[0]
+    order_sum = order_sum['ord_sum']
+    client = query  
 
-            querry1 = f"SELECT a_s.appointment_id,  sum(price) FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
+    context = {
+        'master': master,
+        'client': client,
+        'order_sum': order_sum,
+        'item_list':item_list,
+        'title': 'Барбершоп Дыня'
+    } 
 
-            cursor.execute(querry1)
-            row1 = cursor.fetchone() 
+    # try:
+    #     with connection.cursor() as cursor:            
+    #         querry = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
 
-        context = {
-            'order_details': row,
-            'order_sum': row1,            
-            'title': 'Барбершоп Дыня'   
-        }  
+    #         cursor.execute(querry)
+    #         row = cursor.fetchall() 
+
+    #         querry1 = f"SELECT a_s.appointment_id,  sum(price) FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
+
+    #         cursor.execute(querry1)
+    #         row1 = cursor.fetchone() 
+
+    #     context = {
+    #         'order_details': row,
+    #         'order_sum': row1,            
+    #         'title': 'Барбершоп Дыня'   
+    #     }  
         
-    except IndexError:
-        context = {
-            'app':HttpResponse("Запись не найдена", status=404) ,
-            'title': 'Барбершоп Дыня'  
-        }
-        return context
+    # except IndexError:
+    #     context = {
+    #         'app':HttpResponse("Запись не найдена", status=404) ,
+    #         'title': 'Барбершоп Дыня'  
+    #     }
+    #     return context
     
     return render(request, 'order_detail.html', context)
 
+def reviews(request):  
+    query = Review.objects.all()
+
+    context = {
+        'reviews': query,
+        'title': 'Барбершоп Дыня'
+	}  
+    return render(request, 'reviews.html', context)

@@ -7,3 +7,8 @@ admin.site.register(Master)
 admin.site.register(Order)
 admin.site.register(Service)
 admin.site.register(Review)
+
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'duration', 'is_popular')
+    list_filter = ('is_popular',)
+    search_fields = ('name', 'description')
