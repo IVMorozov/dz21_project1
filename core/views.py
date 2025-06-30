@@ -9,6 +9,16 @@ from pickle import FLOAT
 from token import NAME, STRING
 from django.db.models import Q,  Sum, Count
 from .models import Order, Review, Master, Service
+from django.db.models import CharField, TextField  
+from django.db.models import Transform 
+
+class UpperCase(Transform):  
+    lookup_name = 'upper'  
+    function = 'UPPER'  
+    bilateral = True 
+    
+CharField.register_lookup(UpperCase)  
+TextField.register_lookup(UpperCase)
 
 
 
@@ -74,7 +84,33 @@ def services_list(request):
 
 @login_required(login_url='/')
 def orders_list(request): 
-    query = Order.objects.all().order_by('-date_created')  
+    # Получаем параметры запроса
+    q = request.GET.get("q")
+
+    # Чекбоксы поиска по телефону, имени и комментарию
+    search_by_phone = request.GET.get("search_by_phone", "false") == "true"
+    search_by_client_name = request.GET.get("search_by_client_name", "false") == "true"
+    search_by_comment = request.GET.get("search_by_comment", "false") == "true"
+
+    query = Order.objects.all().order_by('-date_created') 
+
+        # Создаем базовую Q
+    base_q = Q()
+
+    # Серия IF где мы модифицируем базовый запрос в зависимости от чекбоксов и радиокнопок
+
+    if q:
+        if search_by_phone:
+            base_q |= Q(phone__icontains=q)
+
+        if search_by_client_name:
+            base_q |= Q(client_name__icontains=q)
+
+        if search_by_comment:
+            base_q |= Q(comment__icontains=q)
+    
+        query = query.filter(base_q)
+        
 
     context = {
         'orders': query,
