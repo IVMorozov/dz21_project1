@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1> Отзывы наших клиентов  </h1>
+    <div>
+        <span class="fs-3" > <b>Отзывы наших клиентов </b> </span>
+        <a class="btn btn-success" aria-current="page" href="{% url 'review_create' %}">Оставить отзыв</a>
+    </div><br>
+
     <div class="row row-cols-1 row-cols-md-4 g-4 ">
         
         {% for review  in reviews %}

@@ -22,7 +22,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('', views.landing, name='landing'),
+    path('ajax/get-master-services/', views.get_master_services, name='get_master_services'),
     path('thanks/', views.thanks, name='thanks'),
     path('orders/', views.orders_list, name='orders_list'),
     path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
@@ -31,6 +33,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('reviews/', views.reviews, name='reviews'),
     path('make_appointment/', views.make_appointment, name='make_appointment'),
+    path("reviews/create/", views.review_create, name="review_create"),
+    path('ajax/get-master-services/', views.get_master_services, name='get_master_services'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

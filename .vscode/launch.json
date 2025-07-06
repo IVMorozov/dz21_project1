@@ -8,7 +8,7 @@
             "name": "Python Debugger: Django",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}\\django_consult_411\\manage.py",
+            "program": "${workspaceFolder}\\manage.py",
             "args": [
                 "runserver"
             ],

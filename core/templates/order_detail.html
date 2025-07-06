@@ -2,10 +2,12 @@
 
 {% block content %}
     <h1> Просмотр деталей по записи клиента </h1>
+    {{ mm }}
     <div class="row-g3"> 
         <b>Мастер:</b> {{ master }}<br>
         <br>
         <b>Инфо о клиенте:</b><br>
+        
         {% for cl_info in client  %}
         Имя: {{ cl_info.client_name }}<br> 
         Телефон: {{ cl_info.phone }}<br> 

@@ -12,15 +12,19 @@ from .models import Order, Review, Master, Service
 from django.db.models import CharField, TextField  
 from django.db.models import Transform 
 
-class UpperCase(Transform):  
-    lookup_name = 'upper'  
-    function = 'UPPER'  
-    bilateral = True 
+from django.shortcuts import redirect
+from django.core.exceptions import ObjectDoesNotExist
+from .forms import OrderForm, ReviewModelForm
+from django.http import JsonResponse
+import json
+
+# class UpperCase(Transform):  
+#     lookup_name = 'upper'  
+#     function = 'UPPER'  
+#     bilateral = True 
     
-CharField.register_lookup(UpperCase)  
-TextField.register_lookup(UpperCase)
-
-
+# CharField.register_lookup(UpperCase)  
+# TextField.register_lookup(UpperCase)
 
 # Create your views here.
 # def get_main_menu():
@@ -48,12 +52,54 @@ def thanks(request):
 	}  
     return render(request, 'thanks.html', context)
 
-def make_appointment(request):  
-    context = {
-        'name': "Дыня",
-        'title': 'Барбершоп Дыня'
-	}  
-    return render(request, 'make_appointment.html', context)
+def make_appointment(request): 
+    form = OrderForm(request.POST)
+    if not form.is_valid():
+            context = {
+                "title": "Запись на услуги",
+                "button_text": "Записаться",
+                "form": form,
+            }
+
+            return render(request, "make_appointment.html", context)
+
+    form.save()
+    return redirect("thanks")
+
+def get_master_services(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            master_id = data.get('master_id')
+    
+            # master_id = request.GET.get('master_id')
+            # try:
+            master = Master.objects.get(id=master_id)
+            services = master.services.all()
+            services_data = [{'id': service.id, 'description': service.description} for service in services]
+            return JsonResponse({'services': services_data})
+        except Master.DoesNotExist:
+            return JsonResponse({'error': 'Master not found'}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+    # if request.method == 'POST':
+    #     try:
+    #         data = json.loads(request.body)
+    #         master_id = data.get('master_id')
+    #         master = Master.objects.get(id=master_id)
+    #         services = master.services.all()
+    #         services_data = [{'id': service.id, 'name': service.name} for service in services]
+    #         return JsonResponse({'services': services_data})
+    #     except Master.DoesNotExist:
+    #         return JsonResponse({'error': 'Master not found'}, status=404)
+    #     except json.JSONDecodeError:
+    #         return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    # return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+
 
 def about(request):  
     context = {
@@ -62,6 +108,28 @@ def about(request):
 	}  
     return render(request, 'about.html', context)
 
+def review_create(request):
+    if request.method == "GET":
+        form = ReviewModelForm()
+        context = {
+            "title": "Оставить отзыв",
+            "button_text": "Отправить отзыв",
+            "form": form,
+        }
+        return render(request, "review_form.html", context)
+
+    elif request.method == "POST":
+        form = ReviewModelForm(request.POST, request.FILES)
+        if not form.is_valid():
+            context = {
+                "title": "Оставить отзыв",
+                "button_text": "Отправить отзыв",
+                "form": form,
+            }
+            return render(request, "review_form.html", context)
+
+        form.save()
+        return redirect("thanks")
 
 
 def masters_list(request):     
@@ -120,11 +188,14 @@ def orders_list(request):
 
 @login_required(login_url='/')
 def order_detail(request, order_id):  
+    
 
     query = Order.objects.filter(id = order_id)
     item_list = Service.objects.filter(orders__in=query)
     order_sum = Service.objects.filter(orders__in=query).aggregate(ord_sum=Sum('price'))
     master = Master.objects.filter(orders__in=query)
+    # master_id = request.GET.get('master_id')
+
     master = master[0]
     order_sum = order_sum['ord_sum']
     client = query  
@@ -134,7 +205,8 @@ def order_detail(request, order_id):
         'client': client,
         'order_sum': order_sum,
         'item_list':item_list,
-        'title': 'Барбершоп Дыня'
+        'title': 'Барбершоп Дыня',
+        # 'mm': master_id
     } 
 
     # try:

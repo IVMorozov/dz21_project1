@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -135,3 +136,14 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
+MISTRAL_MODERATIONS_GRADES = {
+    "hate_and_discrimination": 0.1,  # ненависть и дискриминация
+    "sexual": 0.1,  # сексуальный
+    "violence_and_threats": 0.1,  # насилие и угрозы
+    "dangerous_and_criminal_content": 0.1,  # опасный и криминальный контент
+    "selfharm": 0.1,  # самоповреждение
+    "health": 0.1,  # здоровье
+    "financial": 0.1,  # финансовый
+    "law": 0.1,  # закон
+    "pii": 0.1,  # личная информация
+}

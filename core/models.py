@@ -12,10 +12,10 @@ class Service(models.Model):
     image = models.ImageField (upload_to="services/", blank=True, verbose_name="Изображение")
 
     def __str__(self):
-        return f"{self.description}"
+        return f" {self.description}"
     
     class Meta:
-        verbose_name = "Услуга"
+        verbose_name = "Услугу"
         verbose_name_plural = "Список услуг"
         ordering = ['description']
     
@@ -32,7 +32,7 @@ class Master(models.Model):
         return f"{self.name}"
     
     class Meta:
-        verbose_name = "Мастер"
+        verbose_name = "Мастера"
         verbose_name_plural = "Список Мастеров"
         ordering = ['name']
 
@@ -51,7 +51,7 @@ class Order(models.Model):
     client_name = models.CharField (max_length=100, verbose_name="Имя клиента")
     phone = models.CharField (max_length=20, verbose_name="Телефон клиента")
     comment = models.TextField (blank=True, verbose_name="Комментарий")
-    status = models.CharField (max_length=50, choices=STATUS_CHOICES, default="not_approved", verbose_name="Статус")
+    status = models.CharField (max_length=50, choices=STATUS_CHOICES, default="НОВАЯ", verbose_name="Статус")
     date_created = models.DateTimeField (auto_now_add=True, verbose_name="Дата создания")
     date_updated = models.DateTimeField (auto_now=True, verbose_name="Дата обновления")
     master = models.ForeignKey ('Master', related_name="orders", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Мастер")
@@ -87,7 +87,7 @@ class Review(models.Model):
     ]
     text = models.TextField (verbose_name="Текст отзыва")
     client_name = models.CharField (max_length=100, blank=True, verbose_name="Имя клиента")
-    master = models.ForeignKey (Master, on_delete=models.CASCADE, verbose_name="Мастер")
+    master = models.ForeignKey (Master, on_delete=models.SET_NULL,null=True, blank=True, verbose_name="Мастер")
     photo = models.ImageField (upload_to="reviews/", blank=True, null=True, verbose_name="Фотография")
     created = models.DateTimeField (auto_now_add=True, verbose_name="Дата создания")
     rating = models.PositiveSmallIntegerField (choices=RATING_CHOICES, verbose_name="Оценка") 
