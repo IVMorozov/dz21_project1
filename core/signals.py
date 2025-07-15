@@ -6,5 +6,18 @@ from .mystral import is_bad_review
 @receiver(post_save, sender=Review)
 def check_review(sender, instance, created, **kwargs):
     # Created - это флаг, который показывает, что запись была создана
-    # if created:
-    return 
+    if created:
+        # Меняем статус на ai_checked_in_progress
+        instance.ai_checked_status = "ai_checked_in_progress"
+        instance.save()
+
+        # Отправляем на проверку
+        review_text = instance.text
+        if is_bad_review(review_text):
+            instance.ai_checked_status = "ai_cancelled"
+            instance.is_published = False
+        else:
+            instance.ai_checked_status = "ai_checked_true"
+            instance.is_published = True
+
+        instance.save()

@@ -1,6 +1,6 @@
 from pprint import pprint
 from mistralai import Mistral
-from ..barbershop.settings import MISTRAL_MODERATIONS_GRADES, MISTRAL_API_KEY
+from barbershop.settings import MISTRAL_MODERATIONS_GRADES, MISTRAL_API_KEY
 
 import os
 # from dotenv import load_dotenv
