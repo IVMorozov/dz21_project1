@@ -92,6 +92,7 @@ class Review(models.Model):
     ("ai_checked_in_progress", "В процессе проверки"),
     ("ai_checked_false", "Не проверено"),
     ]
+    
     text = models.TextField (verbose_name="Текст отзыва")
     client_name = models.CharField (max_length=100, blank=True, verbose_name="Имя клиента")
     master = models.ForeignKey (Master, on_delete=models.SET_NULL,null=True, blank=True, verbose_name="Мастер")
