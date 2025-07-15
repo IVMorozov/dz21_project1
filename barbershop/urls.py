@@ -21,10 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    
-    path('', views.landing, name='landing'),
-    path('ajax/get-master-services/', views.get_master_services, name='get_master_services'),
+    path('admin/', admin.site.urls),    
+    path('', views.landing, name='landing'),    
     path('thanks/', views.thanks, name='thanks'),
     path('orders/', views.orders_list, name='orders_list'),
     path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
