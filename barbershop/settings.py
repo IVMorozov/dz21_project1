@@ -18,6 +18,8 @@ load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY')
+TELEGRAM_BOT_API_KEY=os.getenv('TELEGRAM_BOT_API_KEY')
+TELEGRAM_USER_ID=os.getenv('TELEGRAM_USER_ID')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
