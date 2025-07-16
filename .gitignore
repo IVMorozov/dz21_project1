@@ -6,3 +6,5 @@ db.sqlite3
 barbershop.db
 barbershop\test.py
 barbershop\.env
+.env
+barbershop/.env
