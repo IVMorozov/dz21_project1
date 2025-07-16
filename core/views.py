@@ -237,7 +237,9 @@ def order_detail(request, order_id):
     return render(request, 'order_detail.html', context)
 
 def reviews(request):  
-    query = Review.objects.all()
+    # query = Review.objects.all()
+    query = Review.objects.filter(is_published=True)
+
 
     context = {
         'reviews': query,

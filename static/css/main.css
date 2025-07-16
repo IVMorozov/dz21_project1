@@ -3,6 +3,7 @@ body {
 }
 
 header .navbar  div{
+    text-align: center;
     background-color: #f2e765;    
     max-width: 67.5%;
 }
