@@ -17,6 +17,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from .forms import OrderForm, ReviewModelForm
 from django.http import JsonResponse
 import json
+from django.contrib import messages
+
+
 
 # class UpperCase(Transform):  
 #     lookup_name = 'upper'  
@@ -60,10 +63,11 @@ def make_appointment(request):
                 "button_text": "Записаться",
                 "form": form,
             }
-
+            messages.error(request, "Форма заполнена некорректно")
             return render(request, "make_appointment.html", context)
 
     form.save()
+    messages.success(request, "Заявка успешно создана")
     return redirect("thanks")
 
 def get_master_services(request):
@@ -116,6 +120,7 @@ def review_create(request):
             "button_text": "Отправить отзыв",
             "form": form,
         }
+        
         return render(request, "review_form.html", context)
 
     elif request.method == "POST":
@@ -126,9 +131,11 @@ def review_create(request):
                 "button_text": "Отправить отзыв",
                 "form": form,
             }
+            messages.error(request, "Форма заполнена некорректно")
             return render(request, "review_form.html", context)
 
         form.save()
+        messages.success(request, "Отзыв успешно отправлен")
         return redirect("thanks")
 
 

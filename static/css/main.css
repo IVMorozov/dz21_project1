@@ -48,6 +48,10 @@ footer {
     font-size: 10px;
 };
 
+.toast-container {
+  z-index: 1055 !important; /* Важно, чтобы быть поверх других элементов */
+};
+
 
 
 
