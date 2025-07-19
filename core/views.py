@@ -3,7 +3,11 @@ from django.http import HttpResponse
 from django.db import connection
 from datetime import datetime
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.admin.views.decorators import staff_member_required
+
+
+
 
 from pickle import FLOAT
 from token import NAME, STRING
@@ -158,6 +162,7 @@ def services_list(request):
     return render(request, 'services.html', context)
 
 @login_required(login_url='/')
+@user_passes_test(lambda u: u.is_staff)
 def orders_list(request): 
     # Получаем параметры запроса
     q = request.GET.get("q")

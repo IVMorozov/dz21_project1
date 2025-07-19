@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'core',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -189,3 +190,7 @@ JAZZMIN_UI_TWEAKS = {
     },
     "actions_sticky_top": False
 }
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/' # Куда перенаправить после успешного входа
+LOGOUT_REDIRECT_URL = '/' # Куда перенаправить после выхода

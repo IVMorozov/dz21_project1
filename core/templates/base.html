@@ -58,12 +58,12 @@
         {% block footer %}
             <footer class="fixed-bottom">            
                 <p>Python Django Study, 2025 &copy;            
-                    {% if user.is_stuff %}
-                        Статус: <span class="badge bg-warning">Сотрудник</span>
-                        {% elif user.is_admin %}               
-                            Статус: <span class="badge bg-danger">Администратор</span> 
+                    {% if user.is_superuser %}                        
+                        Статус: <span class="badge bg-danger">Администратор</span> 
+                        {% elif user.is_staff %}               
+                            Статус: <span class="badge bg-warning">Сотрудник</span>
                         {% else %}           
-                            Статус: <span class="badge bg-secondary">Пользователь</span>           
+                            Статус: <span class="badge bg-secondary">Гость</span>           
                     {% endif %}
                 </p>                  
             </footer>
