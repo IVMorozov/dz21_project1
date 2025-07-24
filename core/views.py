@@ -7,8 +7,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 
 
-
-
 from pickle import FLOAT
 from token import NAME, STRING
 from django.db.models import Q,  Sum, Count
@@ -22,42 +20,23 @@ from .forms import OrderForm, ReviewModelForm
 from django.http import JsonResponse
 import json
 from django.contrib import messages
+from django.views.generic import TemplateView, ListView, DetailView
+from django.views import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
+# Собственный класс проверяем юзер из став и юзер из админ
 
+class AdminStaffRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_staff and self.request.user.is_active
 
-# class UpperCase(Transform):  
-#     lookup_name = 'upper'  
-#     function = 'UPPER'  
-#     bilateral = True 
-    
-# CharField.register_lookup(UpperCase)  
-# TextField.register_lookup(UpperCase)
+class LandingView(TemplateView):
+    template_name = "landing.html"
 
-# Create your views here.
-# def get_main_menu():
-#     return[
-#         {'name': "Главная", 'url':'landing'},
-#         {'name': "О нас", 'url': 'about'},
-#         {'name': "Услуги", 'url': 'services_list'},
-#         {'name': "Мастера", 'url': 'masters_list'},
-#         {'name': "Запись", 'url': 'make_appointment'},
-#     ]
-
-
-def landing(request): 
-
-    context = {
-        'name': "Дыня",
-        'title': 'Барбершоп Дыня'
-	}    
-    return render(request, 'landing.html', context)
-
-def thanks(request):  
-    context = {
-        'name': "Дыня",
-        'title': 'Барбершоп Дыня'
-	}  
-    return render(request, 'thanks.html', context)
+class ThanksTemplateView(TemplateView):
+    template_name = "thanks.html"
 
 def make_appointment(request): 
     form = OrderForm(request.POST)
@@ -106,15 +85,8 @@ def get_master_services(request):
     #         return JsonResponse({'error': 'Invalid JSON'}, status=400)
     # return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
-
-
-def about(request):  
-    context = {
-        'name': "Дыня",
-        'title': 'Барбершоп Дыня'
-	}  
-    return render(request, 'about.html', context)
+class AboutTemplateView(TemplateView):
+    template_name = "about.html"
 
 def review_create(request):
     if request.method == "GET":
@@ -142,15 +114,23 @@ def review_create(request):
         messages.success(request, "Отзыв успешно отправлен")
         return redirect("thanks")
 
+class MastersListView(ListView):
+    model = Master    
+    template_name = "masters_list.html"
+    context_object_name = "masters"
+    ordering = ["-name"]
 
-def masters_list(request):     
-    query = Master.objects.all()        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Мастера"
+        return context
 
-    context = {        
-        'masters': query,
-        'title': 'Барбершоп Дыня',
-	}  
-    return render(request, 'masters_list.html', context)
+    def get_queryset(self):
+        # Определим мастеров у которых есть хотя бы одна услуга
+        masters = Master.objects.prefetch_related("services").filter(
+            services__isnull=False
+        ).distinct()
+        return masters
 
 def services_list(request):  
     query = Service.objects.all()
@@ -158,45 +138,55 @@ def services_list(request):
     context = {
         'services': query,
         'title': 'Барбершоп Дыня'
-	}     
+    }     
     return render(request, 'services.html', context)
 
-@login_required(login_url='/')
-@user_passes_test(lambda u: u.is_staff)
-def orders_list(request): 
-    # Получаем параметры запроса
-    q = request.GET.get("q")
+# @user_passes_test(lambda u: u.is_staff)
+class OrderListView(AdminStaffRequiredMixin, ListView):
+    model = Order
+    template_name = "orders_list.html"    
+    context_object_name = "orders"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Барбершоп Дыня"        
+        return context
 
-    # Чекбоксы поиска по телефону, имени и комментарию
-    search_by_phone = request.GET.get("search_by_phone", "false") == "true"
-    search_by_client_name = request.GET.get("search_by_client_name", "false") == "true"
-    search_by_comment = request.GET.get("search_by_comment", "false") == "true"
+    def get_queryset(self):
+        # Получаем параметры запроса
+        q = self.request.GET.get("q")
 
-    query = Order.objects.all().order_by('-date_created') 
+        search_by_phone = self.request.GET.get("search_by_phone", "false") == "true"
+        search_by_client_name = self.request.GET.get("search_by_client_name", "false") == "true"
+        search_by_comment = self.request.GET.get("search_by_comment", "false") == "true"
+
+        # Радиокнопки направления сорртировки по дате
+        
+        order_by_date = self.request.GET.get("order_by_date_created", "desc")
+
+        # Cоздаем базовый запрос
+        query = Order.objects.all()
 
         # Создаем базовую Q
-    base_q = Q()
+        base_q = Q()
 
-    # Серия IF где мы модифицируем базовый запрос в зависимости от чекбоксов и радиокнопок
+        # Серия IF где мы модифицируем базовый запрос в зависимости от чекбоксов и радиокнопок
 
-    if q:
-        if search_by_phone:
-            base_q |= Q(phone__icontains=q)
+        if q:
+            if search_by_phone:
+                base_q |= Q(phone__icontains=q)
 
-        if search_by_client_name:
-            base_q |= Q(client_name__icontains=q)
+            if search_by_client_name:
+                base_q |= Q(name__icontains=q)
 
-        if search_by_comment:
-            base_q |= Q(comment__icontains=q)
-    
-        query = query.filter(base_q)
+            if search_by_comment:
+                base_q |= Q(comment__icontains=q)
         
+        # Объединяем базовый запрос и базовую Q
+        query = query.filter(base_q)
 
-    context = {
-        'orders': query,
-        'title': 'Барбершоп Дыня'
-	}     
-    return render(request, 'orders_list.html', context)
+        return query
+
 
 @login_required(login_url='/')
 def order_detail(request, order_id):  
