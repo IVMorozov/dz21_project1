@@ -123,14 +123,17 @@ class MastersListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Мастера"
-        return context
-
-    def get_queryset(self):
-        # Определим мастеров у которых есть хотя бы одна услуга
-        masters = Master.objects.prefetch_related("services").filter(
+        context["masters"] = Master.objects.prefetch_related("services").filter(
             services__isnull=False
         ).distinct()
-        return masters
+        return context
+
+    # def get_queryset(self):
+    #     # Определим мастеров у которых есть хотя бы одна услуга
+    #     masters = Master.objects.prefetch_related("services").filter(
+    #         services__isnull=False
+    #     ).distinct()
+    #     return masters
 
 def services_list(request):  
     query = Service.objects.all()
