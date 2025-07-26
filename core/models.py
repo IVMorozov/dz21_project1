@@ -66,10 +66,6 @@ class Order(models.Model):
         verbose_name_plural = "Список записей"
         ordering = ['appointment_date']
     
-
-
-
-    
 class Review(models.Model):
 
     TERRIBLE = 1  

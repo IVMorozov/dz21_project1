@@ -18,7 +18,6 @@ class ReviewModelForm(forms.ModelForm):
             "rating": forms.Select(attrs={"class": "form-control"}),
         }
 
-
 class OrderForm(forms.ModelForm):    
     appointment_date = forms.SplitDateTimeField(label="Дата и время записи", widget=forms.SplitDateTimeWidget(attrs={"class": "form-control"}, date_attrs={'class':'datepicker', 'type':'date'}, time_attrs={'class':'timepicker', 'type':'time'},))
 

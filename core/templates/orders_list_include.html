@@ -31,6 +31,7 @@
                     
                     <span class="text-end">Дата создания:  <span class="badge bg-info px-2"> {{ order.date_created }}</span></span><br>
                     <span><b>Клиент:</b> {{ order.client_name }}</span>
+                    <span><b>Мастер:</b> {{ order.master }}</span>
                     <span><b>Телефон клиента:</b> {{ order.phone }}</span>                
                     <span><b>Запись оформлена на:</b> {{ order.appointment_date }}</span>
                     <span><b>Количество услуг </b> -  {{ order.services.all|length }} </span><br>

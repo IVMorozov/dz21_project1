@@ -64,20 +64,20 @@ hw_theme:
 
 ### Часть 2: Представления для отображения списков и деталей (`ListView`, `DetailView`)
 
-1. **Список заявок (`orders_list`):**
+1. v**Список заявок (`orders_list`):**
     - Создайте класс `OrdersListView`, унаследованный от `django.contrib.auth.mixins.LoginRequiredMixin` и `django.views.generic.ListView`.
     - `LoginRequiredMixin` должен идти **перед** `ListView` для корректной проверки авторизации.
     - Укажите `model = Order`, `template_name = 'orders_list.html'`, `context_object_name = 'orders'`.
     - Для сортировки по убыванию даты создания переопределите `queryset` или укажите атрибут `ordering = ['-date_created']`.
     - **Перенесите логику поиска:** логику фильтрации по Q-объектам из функционального представления перенесите в метод `get_queryset`. В этом методе сначала получайте базовый `queryset`, а затем применяйте к нему фильтры на основе GET-параметров из `self.request.GET`.
 
-2. **Детальная информация о заявке (`order_detail`):**
+2. v**Детальная информация о заявке (`order_detail`):**
     - Создайте класс `OrderDetailView`, унаследованный от `LoginRequiredMixin` и `django.views.generic.DetailView`.
     - Укажите `model = Order`, `template_name = 'order_detail.html'`, `context_object_name = 'order'`.
 
 ### Часть 3: Представления для создания объектов (`CreateView`)
 
-1. **Создание отзыва (`create_review`):**
+1. v**Создание отзыва (`create_review`):**
     - Создайте класс `ReviewCreateView`, унаследованный от `django.views.generic.CreateView`.
     - Укажите `model = Review`, `form_class = ReviewForm`, `template_name = 'review_form.html'`.
     - Для редиректа после успешного создания отзыва используйте `success_url = reverse_lazy('thanks')`.

@@ -2,20 +2,20 @@
 
 {% block content %}
     <h1> Просмотр деталей по записи клиента </h1>
-    {{ mm }}
+    
     <div class="row-g3"> 
-        <b>Мастер:</b> {{ master }}<br>
+        <b>Мастер:</b> {{ order.master }}<br>
         <br>
         <b>Инфо о клиенте:</b><br>
         
-        {% for cl_info in client  %}
-        Имя: {{ cl_info.client_name }}<br> 
-        Телефон: {{ cl_info.phone }}<br> 
-        Записан на: {{ cl_info.appointment_date }}<br> 
-        {% endfor %} 
+        {% comment %} {% for cl_info in order.client  %} {% endcomment %}
+        Имя: {{ order.client_name }}<br> 
+        Телефон: {{ order.phone }}<br> 
+        Записан на: {{ order.appointment_date }}<br> 
+        {% comment %} {% endfor %}  {% endcomment %}
         <br>
         <h5><b>Услуги:  </b></h5>    
-        {% for service in item_list  %}
+        {% for service in services  %}
             <div class="appointment_card"> 
                 Услуга: {{ service.name }}<br>
                 Описание услуги: {{ service.description }}<br>                    

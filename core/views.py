@@ -25,9 +25,14 @@ from django.views import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+import logging
+from django.http import Http404
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 
 # Собственный класс проверяем юзер из став и юзер из админ
-
 class AdminStaffRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_staff and self.request.user.is_active
@@ -38,21 +43,26 @@ class LandingView(TemplateView):
 class ThanksTemplateView(TemplateView):
     template_name = "thanks.html"
 
-def make_appointment(request): 
-    form = OrderForm(request.POST)
-    if not form.is_valid():
-            context = {
-                "title": "Запись на услуги",
-                "button_text": "Записаться",
-                "form": form,
-            }
-            messages.error(request, "Форма заполнена некорректно")
-            return render(request, "make_appointment.html", context)
+class OrderCreateView(CreateView):
+    model = Order
+    form_class = OrderForm
+    template_name = "make_appointment.html"
+    success_url = reverse_lazy("orders_list")
 
-    form.save()
-    messages.success(request, "Заявка успешно создана")
-    return redirect("thanks")
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Создание заявки"
+        context["button_text"] = "Сохранить"
+        return context
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Заявка успешно создана")
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request, "Форма заполнена некорректно")
+        return super().form_invalid(form)
+    
 def get_master_services(request):
     if request.method == 'POST':
         try:
@@ -88,31 +98,27 @@ def get_master_services(request):
 class AboutTemplateView(TemplateView):
     template_name = "about.html"
 
-def review_create(request):
-    if request.method == "GET":
-        form = ReviewModelForm()
-        context = {
-            "title": "Оставить отзыв",
-            "button_text": "Отправить отзыв",
-            "form": form,
-        }
-        
-        return render(request, "review_form.html", context)
+class ReviewCreateView(CreateView):
+    model = Review
+    form_class = ReviewModelForm
+    template_name = "review_form.html"
+    success_url = reverse_lazy("thanks")
 
-    elif request.method == "POST":
-        form = ReviewModelForm(request.POST, request.FILES)
-        if not form.is_valid():
-            context = {
-                "title": "Оставить отзыв",
-                "button_text": "Отправить отзыв",
-                "form": form,
-            }
-            messages.error(request, "Форма заполнена некорректно")
-            return render(request, "review_form.html", context)
-
-        form.save()
-        messages.success(request, "Отзыв успешно отправлен")
-        return redirect("thanks")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Оставить отзыв"
+        context["button_text"] = "Отправить отзыв"
+        return context
+    
+    def form_valid(self, form):
+        # Отправляем сообщение об успешной отправке
+        messages.success(self.request, "Отзыв успешно отправлен")
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        # Отправляем сообщение об ошибке
+        messages.error(self.request, "Форма заполнена некорректно")
+        return super().form_invalid(form)
 
 class MastersListView(ListView):
     model = Master    
@@ -144,11 +150,12 @@ def services_list(request):
     }     
     return render(request, 'services.html', context)
 
-# @user_passes_test(lambda u: u.is_staff)
 class OrderListView(AdminStaffRequiredMixin, ListView):
     model = Order
     template_name = "orders_list.html"    
     context_object_name = "orders"
+    ordering = ['-date_created']
+    
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -156,19 +163,16 @@ class OrderListView(AdminStaffRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
+        
         # Получаем параметры запроса
-        q = self.request.GET.get("q")
+        q = self.request.GET.get("q")        
 
         search_by_phone = self.request.GET.get("search_by_phone", "false") == "true"
         search_by_client_name = self.request.GET.get("search_by_client_name", "false") == "true"
         search_by_comment = self.request.GET.get("search_by_comment", "false") == "true"
 
-        # Радиокнопки направления сорртировки по дате
-        
-        order_by_date = self.request.GET.get("order_by_date_created", "desc")
-
         # Cоздаем базовый запрос
-        query = Order.objects.all()
+        query = Order.objects.all()        
 
         # Создаем базовую Q
         base_q = Q()
@@ -186,60 +190,23 @@ class OrderListView(AdminStaffRequiredMixin, ListView):
                 base_q |= Q(comment__icontains=q)
         
         # Объединяем базовый запрос и базовую Q
-        query = query.filter(base_q)
+        query = query.filter(base_q).order_by('-date_created')
 
         return query
 
-
-@login_required(login_url='/')
-def order_detail(request, order_id):  
+class OrderDetailView(AdminStaffRequiredMixin, DetailView):
+    model = Order
+    template_name = "order_detail.html"
+    context_object_name = 'order'
+    pk_url_kwarg = "order_id"    
     
-
-    query = Order.objects.filter(id = order_id)
-    item_list = Service.objects.filter(orders__in=query)
-    order_sum = Service.objects.filter(orders__in=query).aggregate(ord_sum=Sum('price'))
-    master = Master.objects.filter(orders__in=query)
-    # master_id = request.GET.get('master_id')
-
-    master = master[0]
-    order_sum = order_sum['ord_sum']
-    client = query  
-
-    context = {
-        'master': master,
-        'client': client,
-        'order_sum': order_sum,
-        'item_list':item_list,
-        'title': 'Барбершоп Дыня',
-        # 'mm': master_id
-    } 
-
-    # try:
-    #     with connection.cursor() as cursor:            
-    #         querry = f"SELECT a_s.appointment_id, title, description, price FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
-
-    #         cursor.execute(querry)
-    #         row = cursor.fetchall() 
-
-    #         querry1 = f"SELECT a_s.appointment_id,  sum(price) FROM services s JOIN appointments_services a_s on s.id = a_s.service_id where a_s.appointment_id = {order_id}"
-
-    #         cursor.execute(querry1)
-    #         row1 = cursor.fetchone() 
-
-    #     context = {
-    #         'order_details': row,
-    #         'order_sum': row1,            
-    #         'title': 'Барбершоп Дыня'   
-    #     }  
-        
-    # except IndexError:
-    #     context = {
-    #         'app':HttpResponse("Запись не найдена", status=404) ,
-    #         'title': 'Барбершоп Дыня'  
-    #     }
-    #     return context
-    
-    return render(request, 'order_detail.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = self.object  # Получаем текущий объект заказа
+        services = order.services.all()
+        context['services'] = services  # Получаем все связанные услуги
+        context['order_sum'] = sum(service.price for service in services)        
+        return context
 
 def reviews(request):  
     # query = Review.objects.all()
