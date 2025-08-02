@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.conf.global_settings import LOGOUT_REDIRECT_URL
+from django.urls.converters import REGISTERED_CONVERTERS
 from dotenv import load_dotenv
+from django.urls import reverse_lazy
 
 load_dotenv()
 
@@ -191,6 +194,6 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": False
 }
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = '/' # Куда перенаправить после успешного входа
-LOGOUT_REDIRECT_URL = '/' # Куда перенаправить после выхода
+LOGIN_URL = reverse_lazy("login")
+LOGIN_REDIRECT_URL = reverse_lazy("landing") # Куда перенаправить после успешного входа
+LOGOUT_REDIRECT_URL = reverse_lazy("landing") # Куда перенаправить после выхода

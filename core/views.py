@@ -39,6 +39,10 @@ class AdminStaffRequiredMixin(UserPassesTestMixin):
 
 class LandingView(TemplateView):
     template_name = "landing.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["name"] = "Дыня"        
+        return context
 
 class ThanksTemplateView(TemplateView):
     template_name = "thanks.html"

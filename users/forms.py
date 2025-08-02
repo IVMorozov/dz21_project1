@@ -1,9 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+
 from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
 
-User = get_user_model()
+user_model = get_user_model()
 
 
 class UserRegisterForm(UserCreationForm):
@@ -14,7 +15,7 @@ class UserRegisterForm(UserCreationForm):
     )
 
     class Meta:
-        model = User
+        model = user_model
         fields = ("username", "email")
 
     def __init__(self, *args, **kwargs):
@@ -24,7 +25,7 @@ class UserRegisterForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        if User.objects.filter(email=email).exists():
+        if user_model.objects.filter(email=email).exists():
             raise ValidationError("Пользователь с таким email уже существует.")
         return email
 
@@ -38,6 +39,7 @@ class UserLoginForm(AuthenticationForm):
         self.fields["password"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Пароль"}
         )
+
 
     # def clean(self):
     #     cleaned_data = super().clean()
