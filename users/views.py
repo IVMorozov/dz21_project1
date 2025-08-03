@@ -1,16 +1,22 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout as auth_logout, authenticate
+from django.contrib.auth import login, logout as auth_logout, authenticate, get_user_model
 from django.views.decorators.http import require_POST
 from .forms import UserRegisterForm, UserLoginForm
 from django.core.exceptions import ValidationError
-from django.contrib.auth.views import LogoutView, LoginView
+from django.contrib.auth.views import LogoutView, LoginView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_not_required, login_required
+from django.utils.decorators import method_decorator
 from .forms import (
     UserRegisterForm,
     UserLoginForm,
-    # CustomPasswordChangeForm,
+    UserPasswordChangeForm,
+    ProfileUserForm
 )
 
 
@@ -73,3 +79,33 @@ class NewLoginView(LoginView):
 class NewLogoutView(LogoutView):    
     template_name = "users/logout.html"    
     next_page = "logout"
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name = "users/password_change_form.html"
+    form_class = UserPasswordChangeForm
+    success_url = "password_changed"
+    # next_page = "password_changed"
+
+class ProfileUser(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    form_class = ProfileUserForm
+    template_name = 'users/profile.html'
+    extra_context = {'title': "Профиль пользователя"}
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile', args=[self.request.user.pk])
+    
+    def get_object(self, queryset=None):
+        return self.request.user
+    
+class PasswordChangeDoneView(LogoutView):    
+    template_name = "users/password_changed.html"    
+
+class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
+    template_name = "users/password_changed.html"
+    
+
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super().dispatch(*args, **kwargs)
+    

@@ -1,27 +1,6 @@
 
     {% load static %}
-    {% comment %} <nav class="navbar navbar-expand-lg bg-body-tertiary" >
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">{{ title }}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
-            <span class="navbar-toggler-icon"></span>
-            </button> 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <a class="nav-link" aria-current="page" href="{% url 'landing' %}">Главная</a>                            
-                    <a class="nav-link" aria-current="page" href="{% url 'about' %}">О нас</a>
-                    <a class="nav-link" aria-current="page" href="{% url 'services_list' %}">Услуги</a>
-                    <a class="nav-link" aria-current="page" href="{% url 'masters_list' %}">Мастера</a>
-                    <a class="nav-link" aria-current="page" href="{% url 'make_appointment' %}">Запись</a>
-                    {% if user.is_stuff %}
-                        <a class="nav-link" href="{% url 'orders_list' %}">Список записей</a>          
-                    {% endif %}                     
-                </ul>                    
-            </div>
-        </div>
-    </nav> {% endcomment %}
-
-    <nav class="  navbar-expand-lg  bg-body-tertiary navbar" >
+        <nav class="navbar-expand-lg  bg-body-tertiary navbar" >
         <div class="container-fluid">
             <a class="navbar-brand" href="#">{{ title }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
@@ -43,13 +22,25 @@
                 </ul>   
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
+                    {% comment %} <li class="nav-item"> {% endcomment %}
+                        <span class="nav-link">Привет, </span>
+                    {% comment %} </li> {% endcomment %}
+
                     <li class="nav-item">
-                        <span class="nav-link">Привет, {{ user.username }}!</span>
+                        {% comment %} <span class="nav-link">Привет, {{ user.username }}!</span> {% endcomment %}
+                        {% comment %} <span class="d-inline-block">Привет, {% endcomment %}
+                            <a class="nav-link " href="{% url 'profile' %}"> {{ user.username }}! </a>
+                            {% comment %} !
+                        </span> {% endcomment %}
                     </li>
+                    {% comment %} <li class="nav-item">
+                        <span class="nav-link">! </span>
+                    </li> {% endcomment %}
+                    
                     <li class="nav-item">
                         <form action="{% url 'logout' %}" method="post" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-link btn btn-link">Выход</button>
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn btn-link">Выход</button>
                         </form>
                     </li>
                     {% else %}

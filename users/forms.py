@@ -53,3 +53,43 @@ class UserLoginForm(AuthenticationForm):
     #         # Сохраняем пользователя в форме для последующего использования во вью
     #         self.user_cache = user
     #     return cleaned_data
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["old_password"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Старый пароль"}
+        )
+        self.fields["new_password1"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Новый пароль"}
+        )
+        self.fields["new_password2"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Подтвердите новый пароль"}
+        )
+
+    # Проверка что старый пароль НЕ равно новый пароль 1
+    def clean(self):
+        cleaned_data = super().clean()
+        old_password = cleaned_data.get("old_password")
+        new_password1 = cleaned_data.get("new_password1")
+        if old_password and new_password1 and old_password == new_password1:
+            raise forms.ValidationError(
+                "Новый пароль не должен совпадать со старым паролем."
+            )
+        return cleaned_data
+    
+class ProfileUserForm(forms.ModelForm):
+    username = forms.CharField(disabled=True, label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    email = forms.CharField(disabled=True, label='E-mail', widget=forms.TextInput(attrs={'class': 'form-input'}))
+
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'email', 'first_name', 'last_name']
+        labels = {
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+        }
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-input'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-input'}),
+        }
