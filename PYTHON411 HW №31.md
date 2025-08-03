@@ -59,7 +59,7 @@ links: [[PYTHON412 HW №48]]
 
 ### Настройка проекта и приложения
 
-1. **Создание и настройка приложения**
+1. v**Создание и настройка приложения**
    - Создайте новое приложение `users` в вашем проекте Django
    - Подключите `urls.py` из нового приложения в основной конфигурационный файл `urls.py`
    - Добавьте приложение `users` в список `INSTALLED_APPS` в `settings.py`
@@ -71,7 +71,7 @@ links: [[PYTHON412 HW №48]]
 
 ### Представления (Views)
 
-3. **UserRegisterView**
+3. v**UserRegisterView**
    - **Родитель**: `django.views.generic.CreateView`
    - **Шаблон**: `users/register.html`
    - **Форма**: `UserRegisterForm`
@@ -79,7 +79,7 @@ links: [[PYTHON412 HW №48]]
    - Добавьте защиту от доступа аутентифицированных пользователей через `dispatch`
    - Настройте вывод сообщений об успехе/ошибке
 
-4. **UserLoginView**
+4. v**UserLoginView**
    - **Родитель**: `django.contrib.auth.views.LoginView`
    - **Шаблон**: `users/login.html`
    - **Форма**: `UserLoginForm`
@@ -87,7 +87,7 @@ links: [[PYTHON412 HW №48]]
    - Реализуйте обработку параметра `next` для перенаправления
    - Добавьте сообщения об успешном входе и ошибках
 
-5. **UserLogoutView**
+5. v**UserLogoutView**
    - **Родитель**: `django.contrib.auth.views.LogoutView`
    - Настройте перенаправление на главную страницу
    - Добавьте сообщение об успешном выходе
