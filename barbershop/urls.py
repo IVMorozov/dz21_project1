@@ -15,26 +15,41 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-import core.views as views
+from django.urls import path, include
+from core.views import (
+    LandingView, 
+    ThanksTemplateView, 
+    OrderDetailView,   
+    OrderListView,
+    MastersListView, 
+    services_list, 
+    AboutTemplateView, 
+    reviews, 
+    OrderCreateView, 
+    ReviewCreateView,
+    get_master_services
+    )
+
 from django.conf import settings
 from django.conf.urls.static import static
+from users import urls as users_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),    
-    path('', views.landing, name='landing'),    
-    path('thanks/', views.thanks, name='thanks'),
-    path('orders/', views.orders_list, name='orders_list'),
-    path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
-    path('masters/', views.masters_list, name='masters_list'),
-    path('services/', views.services_list, name='services_list'),
-    path('about/', views.about, name='about'),
-    path('reviews/', views.reviews, name='reviews'),
-    path('make_appointment/', views.make_appointment, name='make_appointment'),
-    path("reviews/create/", views.review_create, name="review_create"),
-    path('ajax/get-master-services/', views.get_master_services, name='get_master_services'),
+    path('', LandingView.as_view(), name='landing'),    
+    path('thanks/', ThanksTemplateView.as_view(), name='thanks'),
+    path('orders/', OrderListView.as_view(), name='orders_list'),
+
+    path('orders/<int:order_id>/', OrderDetailView.as_view(), name='order_detail'),
+    path('masters/', MastersListView.as_view(), name='masters_list'),
+    path('services/', services_list, name='services_list'),
+    path('about/', AboutTemplateView.as_view(), name='about'),
+    path('reviews/', reviews, name='reviews'),
+    path('make_appointment/', OrderCreateView.as_view(), name='make_appointment'),
+    path("reviews/create/", ReviewCreateView.as_view(), name="review_create"),
+    path('ajax/get-master-services/', get_master_services, name='get_master_services'),
+    path('users/', include(users_urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

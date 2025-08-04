@@ -26,13 +26,29 @@
                 {% include "nav-bar.html" %}
             </header>
         {% endblock header %}
+        
 
         <main>
-            <div class="container">
+            <div class="container">                
                 {% block content %}
                 {% endblock content %}
             </div>
         </main>
+        <div class="toast-container position-fixed bottom-50 end-0 p-3">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">Уведомление</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         
         <div class="anti_footer">
             <br>
@@ -43,16 +59,17 @@
         {% block footer %}
             <footer class="fixed-bottom">            
                 <p>Python Django Study, 2025 &copy;            
-                    {% if user.is_stuff %}
-                        Статус: <span class="badge bg-warning">Сотрудник</span>
-                        {% elif user.is_admin %}               
-                            Статус: <span class="badge bg-danger">Администратор</span> 
+                    {% if user.is_superuser %}                        
+                        Статус: <span class="badge bg-danger">Администратор</span> 
+                        {% elif user.is_staff %}               
+                            Статус: <span class="badge bg-warning">Сотрудник</span>
                         {% else %}           
-                            Статус: <span class="badge bg-secondary">Пользователь</span>           
+                            Статус: <span class="badge bg-secondary">Гость</span>           
                     {% endif %}
                 </p>                  
             </footer>
         {% endblock footer %}
+        
 
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

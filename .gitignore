@@ -8,6 +8,10 @@ barbershop\test.py
 barbershop\.env
 .env
 barbershop/.env
+<<<<<<< HEAD
 barbershop.db
 barbershop/.env
 barbershop/.env.example
+=======
+barbershop/env.rar
+>>>>>>> 75e7efc0d6d1fe7aab73590876a424f38b4d20cf

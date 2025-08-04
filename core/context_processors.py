@@ -7,7 +7,7 @@ def get_main_menu(request):
             {'name': "Услуги", 'url': 'services_list'},
             {'name': "Мастера", 'url': 'masters_list'},
             {'name': "Отзывы", 'url': 'reviews'},
-            {'name': "Запись", 'url': 'make_appointment'},           
+            # {'name': "Запись", 'url': 'make_appointment'},           
 
         ]
     }
