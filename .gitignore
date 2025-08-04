@@ -8,3 +8,6 @@ barbershop\test.py
 barbershop\.env
 .env
 barbershop/.env
+barbershop.db
+barbershop/.env
+barbershop/.env.example
