@@ -18,9 +18,15 @@ from .forms import (
     UserPasswordChangeForm,
     ProfileUserForm
 )
-
-
-
+from django.contrib.auth.views import (
+    LogoutView,
+    LoginView,
+    PasswordChangeView,
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+)
 class RegisterView(CreateView):
     template_name = "users/register.html"
     form_class = UserRegisterForm
@@ -48,6 +54,7 @@ class NewLoginView(LoginView):
     template_name = "users/login.html"
     authentication_form = UserLoginForm
     redirect_field_name = "landing"
+    redirect_authenticated_user = True
 
     def form_valid(self, form):
         """Вызывается при успешной аутентификации."""
@@ -67,14 +74,11 @@ class NewLoginView(LoginView):
         messages.error(self.request, "Неверное имя пользователя или пароль")
         # Вызываем родительский метод, который снова рендерит страницу с формой
         return super().form_invalid(form)
-    
-
 
 # @require_POST
 # def logout_view(request):
 #     auth_logout(request)
 #     return redirect("landing")
-
 
 class NewLogoutView(LogoutView):    
     template_name = "users/logout.html"    
@@ -85,6 +89,11 @@ class UserPasswordChangeView(PasswordChangeView):
     form_class = UserPasswordChangeForm
     success_url = "password_changed"
     # next_page = "password_changed"
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = "users/password_change_form.html"
+    form_class = UserPasswordChangeForm
+    success_url = "/"
 
 class ProfileUser(LoginRequiredMixin, UpdateView):
     model = get_user_model()
@@ -101,6 +110,7 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
 class PasswordChangeDoneView(LogoutView):    
     template_name = "users/password_changed.html"    
 
+
 class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
     template_name = "users/password_changed.html"
     
@@ -108,4 +118,36 @@ class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
     # @method_decorator(login_required)
     # def dispatch(self, *args, **kwargs):
     #     return super().dispatch(*args, **kwargs)
-    
+
+
+class CustomPasswordResetView(PasswordResetView):
+    """
+    Шаг 2. - Старт процесса сброса пароля - ввод email пользователя
+    """
+
+    template_name = "users/password_reset_form.html"
+    form_class = CustomPasswordResetForm
+    success_url = reverse_lazy("password_reset_done")
+    email_template_name = "users/password_reset_email.html"
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    """
+    Шаг 3. - Страничка уведомления об отправке инструкций по сбросу пароля
+    """
+
+    template_name = "users/password_reset_done.html"
+    # TODO - Есть ли тут success_url?
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    """Шаг 5. - Ввод нового пароля"""
+
+    template_name = "users/password_reset_confirm.html"
+    form_class = CustomSetPasswordForm
+    success_url = reverse_lazy("password_reset_complete")
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    """
+    Шаг 6. Сообщение об успешной смене пароля
+    """
+
+    template_name = "users/password_reset_complete.html"

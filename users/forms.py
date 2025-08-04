@@ -29,7 +29,6 @@ class UserRegisterForm(UserCreationForm):
             raise ValidationError("Пользователь с таким email уже существует.")
         return email
 
-
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

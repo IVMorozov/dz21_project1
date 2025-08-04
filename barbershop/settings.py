@@ -24,6 +24,7 @@ MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY')
 TELEGRAM_BOT_API_KEY=os.getenv('TELEGRAM_BOT_API_KEY')
 TELEGRAM_USER_ID=os.getenv('TELEGRAM_USER_ID')
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -197,3 +198,14 @@ JAZZMIN_UI_TWEAKS = {
 LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("landing") # Куда перенаправить после успешного входа
 LOGOUT_REDIRECT_URL = reverse_lazy("landing") # Куда перенаправить после выхода
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv("EMAIL")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL")
+SERVER_EMAIL = os.getenv("EMAIL")
+EMAIL_ADMIN = os.getenv("EMAIL")

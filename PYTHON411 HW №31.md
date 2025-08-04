@@ -64,7 +64,7 @@ links: [[PYTHON412 HW №48]]
    - Подключите `urls.py` из нового приложения в основной конфигурационный файл `urls.py`
    - Добавьте приложение `users` в список `INSTALLED_APPS` в `settings.py`
 
-2. **Настройка email для восстановления пароля**
+2. v**Настройка email для восстановления пароля**
    - В `settings.py` настройте email backend для отправки писем в консоль:
      - `EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'`
    - Добавьте настройки для корректной работы email системы
