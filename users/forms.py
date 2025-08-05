@@ -1,5 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import (
+    UserCreationForm, 
+    AuthenticationForm, 
+    PasswordChangeForm,
+    PasswordResetForm,
+    SetPasswordForm,
+    )
 
 from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
@@ -77,7 +83,7 @@ class UserPasswordChangeForm(PasswordChangeForm):
             )
         return cleaned_data
     
-class ProfileUserForm(forms.ModelForm):
+class UserProfileUpdateForm(forms.ModelForm):
     username = forms.CharField(disabled=True, label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.CharField(disabled=True, label='E-mail', widget=forms.TextInput(attrs={'class': 'form-input'}))
 
@@ -92,3 +98,32 @@ class ProfileUserForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-input'}),
             'last_name': forms.TextInput(attrs={'class': 'form-input'}),
         }
+
+class CustomPasswordResetForm(PasswordResetForm):
+    """
+    Форма для сброса пароля по email. Шаг 2.
+    Ввод емейла аккаунта для старта процесса сброса пароля.
+    """
+
+    email = forms.EmailField(
+        label="Email",
+        required=True,
+        widget=forms.EmailInput(attrs={"autocomplete": "email"}),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = "form-control"
+            field.widget.attrs["placeholder"] = field.label or ""
+
+class CustomSetPasswordForm(SetPasswordForm):
+    """
+    Форма для сброса пароля по email. Шаг 5.
+    Ввод нового пароля без указания старого.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = "form-control"
+            field.widget.attrs["placeholder"] = field.label or ""

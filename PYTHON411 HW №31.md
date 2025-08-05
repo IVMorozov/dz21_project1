@@ -92,13 +92,13 @@ links: [[PYTHON412 HW №48]]
    - Настройте перенаправление на главную страницу
    - Добавьте сообщение об успешном выходе
 
-6. **UserProfileDetailView**
+6. v**UserProfileDetailView**
    - **Родитель**: `django.views.generic.DetailView`
    - **Шаблон**: `users/profile_detail.html`
    - **Миксин**: `LoginRequiredMixin`
    - Отображение профиля пользователя с проверкой принадлежности профиля
 
-7. **UserProfileUpdateView**
+7. v**UserProfileUpdateView**
    - **Родитель**: `django.views.generic.UpdateView`
    - **Шаблон**: `users/profile_update_form.html`
    - **Миксин**: `LoginRequiredMixin`

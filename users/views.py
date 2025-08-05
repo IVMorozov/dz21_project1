@@ -1,7 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout as auth_logout, authenticate, get_user_model
 from django.views.decorators.http import require_POST
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import (
+    UserRegisterForm, 
+    UserLoginForm, 
+    UserPasswordChangeForm,
+    UserProfileUpdateForm,
+    CustomPasswordResetForm,
+    CustomSetPasswordForm,
+)
 from django.core.exceptions import ValidationError
 from django.contrib.auth.views import LogoutView, LoginView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib import messages
@@ -9,9 +16,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_not_required, login_required
 from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView, ListView, DetailView
 from .forms import (
     UserRegisterForm,
     UserLoginForm,
@@ -75,30 +82,15 @@ class NewLoginView(LoginView):
         # Вызываем родительский метод, который снова рендерит страницу с формой
         return super().form_invalid(form)
 
-# @require_POST
-# def logout_view(request):
-#     auth_logout(request)
-#     return redirect("landing")
 
 class NewLogoutView(LogoutView):    
     template_name = "users/logout.html"    
     next_page = "logout"
 
-class UserPasswordChangeView(PasswordChangeView):
-    template_name = "users/password_change_form.html"
-    form_class = UserPasswordChangeForm
-    success_url = "password_changed"
-    # next_page = "password_changed"
-
-class CustomPasswordChangeView(PasswordChangeView):
-    template_name = "users/password_change_form.html"
-    form_class = UserPasswordChangeForm
-    success_url = "/"
-
-class ProfileUser(LoginRequiredMixin, UpdateView):
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = ProfileUserForm
-    template_name = 'users/profile.html'
+    template_name = 'users/profile_detail.html'
     extra_context = {'title': "Профиль пользователя"}
 
     def get_success_url(self):
@@ -107,18 +99,41 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
     
-class PasswordChangeDoneView(LogoutView):    
-    template_name = "users/password_changed.html"    
+class UserProfileDetailView(LoginRequiredMixin, DetailView):
+    model = get_user_model()
+    form_class = ProfileUserForm
+    template_name = 'users/profile_detail.html'
+    extra_context = {'title': "Профиль пользователя"}
 
+    def get_success_url(self):
+        return reverse_lazy('users:profile', args=[self.request.user.pk])
+    
+    def get_object(self, queryset=None):
+        return self.request.user  
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name = "users/password_change_form.html"
+    form_class = UserPasswordChangeForm
+    success_url = "password_changed"
+    # next_page = "password_changed"
 
 class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
     template_name = "users/password_changed.html"
-    
+
+
+
+
 
     # @method_decorator(login_required)
     # def dispatch(self, *args, **kwargs):
     #     return super().dispatch(*args, **kwargs)
 
+
+
+# class CustomPasswordChangeView(PasswordChangeView):
+#     template_name = "users/password_change_form.html"
+#     form_class = UserPasswordChangeForm
+#     success_url = "/"
 
 class CustomPasswordResetView(PasswordResetView):
     """

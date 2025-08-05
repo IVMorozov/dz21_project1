@@ -1,0 +1,1348 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <title>PYTHON411 HW №31.html</title>
+  <style type="text/css">pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{color:#abb2bf;background:#282c34}.hljs-comment,.hljs-quote{color:#5c6370;font-style:italic}.hljs-doctag,.hljs-formula,.hljs-keyword{color:#c678dd}.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#e06c75}.hljs-literal{color:#56b6c2}.hljs-addition,.hljs-attribute,.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{color:#98c379}.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#d19a66}.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#61aeee}.hljs-built_in,.hljs-class .hljs-title,.hljs-title.class_{color:#e6c07b}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-link{text-decoration:underline}
+body {
+  font-family: 'Inter', sans-serif;
+  color: #f9fafb;
+  background-color: #1f2937;
+}
+
+.preview-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .preview-content {
+    width: 66.666667%;
+  }
+}
+/*! tailwindcss v2.2.7 | MIT License | https://tailwindcss.com *//*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+
+/*
+Document
+========
+*/
+
+/**
+Use a better box model (opinionated).
+*/
+
+*,
+::before,
+::after {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+
+/**
+Use a more readable tab size (opinionated).
+*/
+
+html {
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	   tab-size: 4;
+}
+
+/**
+1. Correct the line height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+*/
+
+html {
+	line-height: 1.15; /* 1 */
+	-webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/*
+Sections
+========
+*/
+
+/**
+Remove the margin in all browsers.
+*/
+
+body {
+	margin: 0;
+}
+
+/**
+Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+*/
+
+body {
+	font-family:
+		system-ui,
+		-apple-system, /* Firefox supports this but not yet `system-ui` */
+		'Segoe UI',
+		Roboto,
+		Helvetica,
+		Arial,
+		sans-serif,
+		'Apple Color Emoji',
+		'Segoe UI Emoji';
+}
+
+/*
+Grouping content
+================
+*/
+
+/**
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+*/
+
+hr {
+	height: 0; /* 1 */
+	color: inherit; /* 2 */
+}
+
+/*
+Text-level semantics
+====================
+*/
+
+/**
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr[title] {
+	-webkit-text-decoration: underline dotted;
+	        text-decoration: underline dotted;
+}
+
+/**
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+	font-weight: bolder;
+}
+
+/**
+1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+2. Correct the odd 'em' font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+	font-family:
+		ui-monospace,
+		SFMono-Regular,
+		Consolas,
+		'Liberation Mono',
+		Menlo,
+		monospace; /* 1 */
+	font-size: 1em; /* 2 */
+}
+
+/**
+Add the correct font size in all browsers.
+*/
+
+small {
+	font-size: 80%;
+}
+
+/**
+Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sub {
+	bottom: -0.25em;
+}
+
+sup {
+	top: -0.5em;
+}
+
+/*
+Tabular data
+============
+*/
+
+/**
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+*/
+
+table {
+	text-indent: 0; /* 1 */
+	border-color: inherit; /* 2 */
+}
+
+/*
+Forms
+=====
+*/
+
+/**
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	font-family: inherit; /* 1 */
+	font-size: 100%; /* 1 */
+	line-height: 1.15; /* 1 */
+	margin: 0; /* 2 */
+}
+
+/**
+Remove the inheritance of text transform in Edge and Firefox.
+1. Remove the inheritance of text transform in Firefox.
+*/
+
+button,
+select { /* 1 */
+	text-transform: none;
+}
+
+/**
+Correct the inability to style clickable types in iOS and Safari.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+	-webkit-appearance: button;
+}
+
+/**
+Remove the inner border and padding in Firefox.
+*/
+
+::-moz-focus-inner {
+	border-style: none;
+	padding: 0;
+}
+
+/**
+Restore the focus styles unset by the previous rule.
+*/
+
+:-moz-focusring {
+	outline: 1px dotted ButtonText;
+}
+
+/**
+Remove the additional ':invalid' styles in Firefox.
+See: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737
+*/
+
+:-moz-ui-invalid {
+	box-shadow: none;
+}
+
+/**
+Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
+*/
+
+legend {
+	padding: 0;
+}
+
+/**
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+	vertical-align: baseline;
+}
+
+/**
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+	height: auto;
+}
+
+/**
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+	-webkit-appearance: textfield; /* 1 */
+	outline-offset: -2px; /* 2 */
+}
+
+/**
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+/**
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to 'inherit' in Safari.
+*/
+
+::-webkit-file-upload-button {
+	-webkit-appearance: button; /* 1 */
+	font: inherit; /* 2 */
+}
+
+/*
+Interactive
+===========
+*/
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+	display: list-item;
+}/**
+ * Manually forked from SUIT CSS Base: https://github.com/suitcss/base
+ * A thin layer on top of normalize.css that provides a starting point more
+ * suitable for web applications.
+ */
+
+/**
+ * Removes the default spacing and border for appropriate elements.
+ */
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+button {
+  background-color: transparent;
+  background-image: none;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Tailwind custom reset styles
+ */
+
+/**
+ * 1. Use the user's configured `sans` font-family (with Tailwind's default
+ *    sans-serif font stack as a fallback) as a sane default.
+ * 2. Use Tailwind's default "normal" line-height so the user isn't forced
+ *    to override it to ensure consistency even when using the default theme.
+ */
+
+html {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+  line-height: 1.5; /* 2 */
+}
+
+
+/**
+ * Inherit font-family and line-height from `html` so users can set them as
+ * a class directly on the `html` element.
+ */
+
+body {
+  font-family: inherit;
+  line-height: inherit;
+}
+
+/**
+ * 1. Prevent padding and border from affecting element width.
+ *
+ *    We used to set this in the html element and inherit from
+ *    the parent element for everything else. This caused issues
+ *    in shadow-dom-enhanced elements like <details> where the content
+ *    is wrapped by a div with box-sizing set to `content-box`.
+ *
+ *    https://github.com/mozdevs/cssremedy/issues/4
+ *
+ *
+ * 2. Allow adding a border to an element by just adding a border-width.
+ *
+ *    By default, the way the browser specifies that an element should have no
+ *    border is by setting it's border-style to `none` in the user-agent
+ *    stylesheet.
+ *
+ *    In order to easily add borders to elements by just setting the `border-width`
+ *    property, we change the default border-style for all elements to `solid`, and
+ *    use border-width to hide them instead. This way our `border` utilities only
+ *    need to set the `border-width` property instead of the entire `border`
+ *    shorthand, making our border utilities much more straightforward to compose.
+ *
+ *    https://github.com/tailwindcss/tailwindcss/pull/116
+ */
+
+*,
+::before,
+::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: currentColor; /* 2 */
+}
+
+/*
+ * Ensure horizontal rules are visible by default
+ */
+
+hr {
+  border-top-width: 1px;
+}
+
+/**
+ * Undo the `border-style: none` reset that Normalize applies to images so that
+ * our `border-{width}` utilities have the expected effect.
+ *
+ * The Normalize reset is unnecessary for us since we default the border-width
+ * to 0 on all elements.
+ *
+ * https://github.com/tailwindcss/tailwindcss/issues/362
+ */
+
+img {
+  border-style: solid;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
+input::-ms-input-placeholder, textarea::-ms-input-placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/**
+ * Reset links to optimize for opt-in styling instead of
+ * opt-out.
+ */
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/**
+ * Reset form element properties that are easy to forget to
+ * style explicitly so you don't inadvertently introduce
+ * styles that deviate from your design system. These styles
+ * supplement a partial reset that is already applied by
+ * normalize.css.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  padding: 0;
+  line-height: inherit;
+  color: inherit;
+}
+
+/**
+ * Use the configured 'mono' font family for elements that
+ * are expected to be rendered with a monospace font, falling
+ * back to the system monospace stack if there is no configured
+ * 'mono' font family.
+ */
+
+pre,
+code,
+kbd,
+samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/**
+ * 1. Make replaced elements `display: block` by default as that's
+ *    the behavior you want almost all of the time. Inspired by
+ *    CSS Remedy, with `svg` added as well.
+ *
+ *    https://github.com/mozdevs/cssremedy/issues/14
+ * 
+ * 2. Add `vertical-align: middle` to align replaced elements more
+ *    sensibly by default when overriding `display` by adding a
+ *    utility like `inline`.
+ *
+ *    This can trigger a poorly considered linting error in some
+ *    tools but is included by design.
+ * 
+ *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210
+ */
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/**
+ * Constrain images and videos to the parent width and preserve
+ * their intrinsic aspect ratio.
+ *
+ * https://github.com/mozdevs/cssremedy/issues/14
+ */
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/**
+ * Ensure the default browser behavior of the `hidden` attribute.
+ */
+
+[hidden] {
+  display: none;
+}
+
+*, ::before, ::after {
+	--tw-border-opacity: 1;
+	border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+	--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: #fff;
+	--tw-ring-color: rgba(59, 130, 246, 0.5);
+	--tw-ring-offset-shadow: 0 0 #0000;
+	--tw-ring-shadow: 0 0 #0000;
+	--tw-shadow: 0 0 #0000;
+}
+
+.preview-content h1, .preview-content h2, .preview-content h3, .preview-content h4, .preview-content h5, .preview-content h6 {
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+.preview-content h1, .preview-content h2, .preview-content h3, .preview-content h4, .preview-content h5, .preview-content h6 {
+	font-weight: 700;
+}
+
+.preview-content blockquote, .preview-content dl, .preview-content dd, .preview-content hr, .preview-content figure, .preview-content p, .preview-content pre {
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+.preview-content h1 {
+	font-size: 1.875rem;
+	line-height: 2.25rem;
+}
+
+.preview-content h2 {
+	font-size: 1.5rem;
+	line-height: 2rem;
+}
+
+.preview-content h3 {
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+}
+
+.preview-content h4 {
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+}
+
+.preview-content h5 {
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+
+.preview-content h6 {
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+}
+
+.preview-content a {
+	--tw-text-opacity: 1;
+	color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+
+.preview-content a:hover {
+      text-decoration: underline;
+    }
+
+.preview-content pre, .preview-content code{
+    font-family: 'Fira Code', monospace;
+    -moz-tab-size: 2;
+      -o-tab-size: 2;
+         tab-size: 2;
+  }
+
+.preview-content pre, .preview-content code {
+	border-radius: 0.5rem;
+}
+
+.preview-content pre, .preview-content code {
+	--tw-bg-opacity: 1;
+	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
+
+.preview-content pre, .preview-content code {
+	--tw-bg-opacity: 0.1;
+}
+
+.preview-content img{
+    max-width: 100%;
+  }
+
+.preview-content pre {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.preview-content pre {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+.preview-content pre code{
+      padding: 0;
+      background-color: transparent;
+    }
+
+.preview-content code {
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+}
+
+.preview-content code {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.preview-content blockquote {
+	border-left-width: 4px;
+}
+
+.preview-content blockquote {
+	--tw-border-opacity: 1;
+	border-color: rgba(59, 130, 246, var(--tw-border-opacity));
+}
+
+.preview-content blockquote {
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
+}
+
+.preview-content table{
+    table-layout: auto;
+  }
+
+.preview-content table *{
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+
+.preview-content table th, .preview-content table td {
+	border-width: 1px;
+}
+
+.preview-content table th, .preview-content table td {
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+}
+
+.preview-content table th, .preview-content table td {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.preview-content table tr:nth-child(odd) {
+	--tw-bg-opacity: 1;
+	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
+
+.preview-content table tr:nth-child(odd) {
+	--tw-bg-opacity: 0.1;
+}
+
+.preview-content ol{
+    padding: auto;
+    list-style: decimal;
+  }
+
+.preview-content li{
+    list-style-position: inside;
+  }
+
+.preview-content li input[type="checkbox"] {
+      margin: 0 0.5rem 0 0 !important;
+    }
+
+.preview-content li p{
+      display: inline-block;
+    }
+
+.preview-content ul ul {
+	padding-left: 1.5rem;
+}
+
+.preview-content ul{
+    list-style: disc;
+  }
+
+.hover\:bg-blue-600:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(37, 99, 235, var(--tw-bg-opacity));
+}
+
+.hover\:bg-red-600:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-100:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+}
+
+.hover\:bg-opacity-10:hover {
+	--tw-bg-opacity: 0.1;
+}
+
+.hover\:bg-opacity-5:hover {
+	--tw-bg-opacity: 0.05;
+}
+
+.focus\:bg-blue-600:focus {
+	--tw-bg-opacity: 1;
+	background-color: rgba(37, 99, 235, var(--tw-bg-opacity));
+}
+
+.focus\:bg-red-600:focus {
+	--tw-bg-opacity: 1;
+	background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
+}
+
+.focus\:bg-gray-100:focus {
+	--tw-bg-opacity: 1;
+	background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+}
+
+.focus\:bg-opacity-10:focus {
+	--tw-bg-opacity: 0.1;
+}
+
+.focus\:outline-none:focus {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+}
+
+.focus\:ring:focus {
+	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+	-webkit-box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+	        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-opacity-50:focus {
+	--tw-ring-opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+
+	.md\:block {
+		display: block;
+	}
+
+	.md\:hidden {
+		display: none;
+	}
+
+	.md\:w-72 {
+		width: 18rem;
+	}
+
+	.md\:items-center {
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+	}
+}
+
+@media (min-width: 1024px) {
+
+	.lg\:mt-0 {
+		margin-top: 0px;
+	}
+
+	.lg\:block {
+		display: block;
+	}
+
+	.lg\:hidden {
+		display: none;
+	}
+
+	.lg\:w-6\/12 {
+		width: 50%;
+	}
+}
+</style>
+</head>
+<body>
+  <div class="preview-content"><hr />
+<p>st_group: python 411<br />
+project: "[[Академия TOP]]"<br />
+journal: "[[PYTHON411]]"<br />
+tags:</p>
+<ul>
+<li>PYTHON411</li>
+<li>django</li>
+<li>authentication</li>
+<li>password-reset</li>
+<li>email</li>
+<li>forms</li>
+<li>views</li>
+<li>users</li>
+<li>profile<br />
+date: 2025-07-27<br />
+type:</li>
+<li>home work<br />
+hw_num: 31<br />
+topic: Рефакторинг проекта на классовые представления (CBV)<br />
+hw_theme:</li>
+<li>django</li>
+<li>authentication</li>
+<li>password-reset</li>
+<li>email</li>
+<li>forms</li>
+<li>views</li>
+<li>UserCreationForm</li>
+<li>AuthenticationForm</li>
+<li>PasswordResetView</li>
+<li>User</li>
+<li>profile</li>
+</ul>
+<h2 id="links-python412-hw-№48">links: [[PYTHON412 HW №48]]</h2>
+<h1 id="домашнее-задание-📃">Домашнее задание 📃</h1>
+<p><strong>Полная система управления пользователями в Django: Аутентификация, Профиль и Восстановление пароля</strong></p>
+<blockquote>
+  <p>[!info]</p>
+  <h3 id="краткое-содержание">Краткое содержание</h3>
+  <p>В этом задании вы создадите полноценную систему управления пользователями с регистрацией, авторизацией, личным кабинетом и обязательным функционалом восстановления пароля через email. Система будет включать профиль пользователя с возможностью редактирования данных, смену пароля и полный цикл восстановления забытого пароля с отправкой email-уведомлений.</p>
+</blockquote>
+<h3 id="технологии-🦾">Технологии: 🦾</h3>
+<ul>
+<li>Python</li>
+<li>Django</li>
+<li>Django Authentication System</li>
+<li>Django Email Backend</li>
+<li>Django Forms &amp; Views</li>
+<li>Bootstrap 5</li>
+<li>HTML/CSS Templates</li>
+</ul>
+<h2 id="задание-👷‍♂️">Задание 👷‍♂️</h2>
+<blockquote>
+  <p>[!warning]<br />
+  У вас может быть собственная система маршрутов и нейминг классов и шаблонов. Главное чтобы весь функционал был реализован.</p>
+</blockquote>
+<h3 id="настройка-проекта-и-приложения">Настройка проекта и приложения</h3>
+<ol>
+<li><p>v<strong>Создание и настройка приложения</strong></p>
+<ul>
+<li>Создайте новое приложение <code>users</code> в вашем проекте Django</li>
+<li>Подключите <code>urls.py</code> из нового приложения в основной конфигурационный файл <code>urls.py</code></li>
+<li>Добавьте приложение <code>users</code> в список <code>INSTALLED_APPS</code> в <code>settings.py</code></li></ul></li>
+<li><p>v<strong>Настройка email для восстановления пароля</strong></p>
+<ul>
+<li>В <code>settings.py</code> настройте email backend для отправки писем в консоль:<ul>
+<li><code>EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'</code></li></ul></li>
+<li>Добавьте настройки для корректной работы email системы</li></ul></li>
+</ol>
+<h3 id="представления-views">Представления (Views)</h3>
+<ol start="3">
+<li><p>v<strong>UserRegisterView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.views.generic.CreateView</code></li>
+<li><strong>Шаблон</strong>: <code>users/register.html</code></li>
+<li><strong>Форма</strong>: <code>UserRegisterForm</code></li>
+<li>Реализуйте автоматический вход пользователя после регистрации</li>
+<li>Добавьте защиту от доступа аутентифицированных пользователей через <code>dispatch</code></li>
+<li>Настройте вывод сообщений об успехе/ошибке</li></ul></li>
+<li><p>v<strong>UserLoginView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.views.LoginView</code></li>
+<li><strong>Шаблон</strong>: <code>users/login.html</code></li>
+<li><strong>Форма</strong>: <code>UserLoginForm</code></li>
+<li>Настройте <code>redirect_authenticated_user = True</code></li>
+<li>Реализуйте обработку параметра <code>next</code> для перенаправления</li>
+<li>Добавьте сообщения об успешном входе и ошибках</li></ul></li>
+<li><p>v<strong>UserLogoutView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.views.LogoutView</code></li>
+<li>Настройте перенаправление на главную страницу</li>
+<li>Добавьте сообщение об успешном выходе</li></ul></li>
+<li><p>v<strong>UserProfileDetailView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.views.generic.DetailView</code></li>
+<li><strong>Шаблон</strong>: <code>users/profile_detail.html</code></li>
+<li><strong>Миксин</strong>: <code>LoginRequiredMixin</code></li>
+<li>Отображение профиля пользователя с проверкой принадлежности профиля</li></ul></li>
+<li><p>v<strong>UserProfileUpdateView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.views.generic.UpdateView</code></li>
+<li><strong>Шаблон</strong>: <code>users/profile_update_form.html</code></li>
+<li><strong>Миксин</strong>: <code>LoginRequiredMixin</code></li>
+<li><strong>Форма</strong>: <code>UserProfileUpdateForm</code></li>
+<li>Позволяет редактировать только собственный профиль</li></ul></li>
+<li><p><strong>UserPasswordChangeView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.views.PasswordChangeView</code></li>
+<li><strong>Шаблон</strong>: <code>users/password_change_form.html</code></li>
+<li><strong>Миксин</strong>: <code>LoginRequiredMixin</code></li>
+<li><strong>Форма</strong>: <code>UserPasswordChangeForm</code></li></ul></li>
+</ol>
+<blockquote>
+  <p>[!warning]</p>
+  <h3 id="обязательные-представления-для-восстановления-пароля">Обязательные представления для восстановления пароля</h3>
+  <p>Все четыре представления для восстановления пароля являются ОБЯЗАТЕЛЬНЫМИ для выполнения задания.</p>
+</blockquote>
+<ol start="9">
+<li><p><strong>CustomPasswordResetView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.views.PasswordResetView</code></li>
+<li><strong>Шаблон</strong>: <code>users/password_reset_form.html</code></li>
+<li><strong>Email-шаблон</strong>: <code>users/password_reset_email.html</code></li>
+<li><strong>Форма</strong>: <code>CustomPasswordResetForm</code></li></ul></li>
+<li><p><strong>CustomPasswordResetDoneView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.views.PasswordResetDoneView</code></li>
+<li><strong>Шаблон</strong>: <code>users/password_reset_done.html</code></li></ul></li>
+<li><p><strong>CustomPasswordResetConfirmView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.views.PasswordResetConfirmView</code></li>
+<li><strong>Шаблон</strong>: <code>users/password_reset_confirm.html</code></li>
+<li><strong>Форма</strong>: <code>CustomSetPasswordForm</code></li></ul></li>
+<li><p><strong>CustomPasswordResetCompleteView</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.views.PasswordResetCompleteView</code></li>
+<li><strong>Шаблон</strong>: <code>users/password_reset_complete.html</code></li></ul></li>
+</ol>
+<h3 id="формы-forms">Формы (Forms)</h3>
+<ol start="13">
+<li><p><strong>UserLoginForm</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.forms.AuthenticationForm</code></li>
+<li>Настройте виджеты для полей <code>username</code> и <code>password</code> с классами Bootstrap 5</li>
+<li>Добавьте placeholder'ы для улучшения UX</li></ul></li>
+<li><p><strong>UserRegisterForm</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.forms.UserCreationForm</code></li>
+<li>Добавьте обязательное поле <code>email</code> с валидацией</li>
+<li>Настройте виджеты всех полей с классами Bootstrap 5</li>
+<li>Уберите help_text для всех полей паролей и username</li></ul></li>
+<li><p><strong>UserProfileUpdateForm</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.forms.ModelForm</code></li>
+<li>Поля: <code>username</code>, <code>email</code>, <code>avatar</code>, <code>birth_date</code>, <code>telegram_id</code>, <code>github_id</code></li>
+<li>Настройте виджеты с соответствующими типами полей (date для birth_date)</li></ul></li>
+<li><p><strong>UserPasswordChangeForm</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.forms.PasswordChangeForm</code></li>
+<li>Настройте виджеты для полей: <code>old_password</code>, <code>new_password1</code>, <code>new_password2</code></li>
+<li>Уберите help_text для всех полей</li></ul></li>
+<li><p><strong>CustomPasswordResetForm</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.forms.PasswordResetForm</code></li>
+<li>Настройте виджет для поля <code>email</code> с Bootstrap классами</li></ul></li>
+<li><p><strong>CustomSetPasswordForm</strong></p>
+<ul>
+<li><strong>Родитель</strong>: <code>django.contrib.auth.forms.SetPasswordForm</code></li>
+<li>Настройте виджеты для <code>new_password1</code> и <code>new_password2</code></li>
+<li>Уберите help_text для полей паролей</li></ul></li>
+</ol>
+<h3 id="маршруты-urls">Маршруты (URLs)</h3>
+<ol start="19">
+<li><strong>Файл <code>urls.py</code> в приложении <code>users</code></strong><ul>
+<li><code>path('register/', UserRegisterView.as_view(), name='register')</code></li>
+<li><code>path('login/', UserLoginView.as_view(), name='login')</code></li>
+<li><code>path('logout/', UserLogoutView.as_view(), name='logout')</code></li>
+<li><code>path('profile/&lt;int:pk&gt;/', UserProfileDetailView.as_view(), name='profile_detail')</code></li>
+<li><code>path('profile/edit/', UserProfileUpdateView.as_view(), name='profile_edit')</code></li>
+<li><code>path('password_change/', UserPasswordChangeView.as_view(), name='password_change')</code></li>
+<li><code>path('password-reset/', CustomPasswordResetView.as_view(), name='password_reset')</code></li>
+<li><code>path('password-reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done')</code></li>
+<li><code>path('reset/&lt;uidb64&gt;/&lt;token&gt;/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm')</code></li>
+<li><code>path('reset/done/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete')</code></li></ul></li>
+</ol>
+<h3 id="шаблоны-templates">Шаблоны (Templates)</h3>
+<ol start="20">
+<li><p><strong>Основные шаблоны аутентификации</strong></p>
+<ul>
+<li><code>users/register.html</code> - форма регистрации с ссылкой на вход</li>
+<li><code>users/login.html</code> - форма входа с ссылками на регистрацию и восстановление пароля</li>
+<li><code>users/profile_detail.html</code> - отображение профиля пользователя</li>
+<li><code>users/profile_update_form.html</code> - форма редактирования профиля</li>
+<li><code>users/password_change_form.html</code> - форма смены пароля</li></ul></li>
+<li><p><strong>Шаблоны восстановления пароля (ОБЯЗАТЕЛЬНО)</strong></p>
+<ul>
+<li><code>users/password_reset_form.html</code> - форма запроса восстановления пароля</li>
+<li><code>users/password_reset_done.html</code> - подтверждение отправки email</li>
+<li><code>users/password_reset_confirm.html</code> - форма установки нового пароля</li>
+<li><code>users/password_reset_complete.html</code> - подтверждение успешного сброса</li>
+<li><code>users/password_reset_email.html</code> - email-шаблон с ссылкой для восстановления</li></ul></li>
+</ol>
+<h3 id="тестирование-восстановления-пароля">Тестирование восстановления пароля</h3>
+<blockquote>
+  <p>[!warning]</p>
+  <h3 id="обязательное-тестирование-и-скриншот">Обязательное тестирование и скриншот</h3>
+  <p>После реализации функционала восстановления пароля вы ОБЯЗАТЕЛЬНО должны протестировать его работу и приложить скриншот email-сообщения из консоли Django. Скриншот должен показывать полное содержимое письма с ссылкой для восстановления пароля.</p>
+</blockquote>
+<ol start="22">
+<li><strong>Процедура тестирования</strong><ul>
+<li>Перейдите на страницу восстановления пароля</li>
+<li>Введите email существующего пользователя</li>
+<li>Проверьте консоль Django на наличие email-сообщения</li>
+<li>Сделайте скриншот консоли с полным содержимым email</li>
+<li>Скопируйте ссылку из email и перейдите по ней</li>
+<li>Установите новый пароль и убедитесь в успешном входе</li></ul></li>
+</ol>
+<h3 id="таблица-компонентов">Таблица компонентов</h3>
+<table>
+<thead>
+<tr>
+<th id="тип_компонента">Тип компонента</th>
+<th id="название_класса">Название класса</th>
+<th id="родительский_класс">Родительский класс</th>
+<th id="маршрут">Маршрут</th>
+<th id="шаблон/форма">Шаблон/Форма</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Views</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>UserRegisterView</code></td>
+<td><code>CreateView</code></td>
+<td><code>/register/</code></td>
+<td><code>UserRegisterForm</code></td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>UserLoginView</code></td>
+<td><code>LoginView</code></td>
+<td><code>/login/</code></td>
+<td><code>UserLoginForm</code></td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>UserLogoutView</code></td>
+<td><code>LogoutView</code></td>
+<td><code>/logout/</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>UserProfileDetailView</code></td>
+<td><code>DetailView</code> + <code>LoginRequiredMixin</code></td>
+<td><code>/profile/&lt;int:pk&gt;/</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>UserProfileUpdateView</code></td>
+<td><code>UpdateView</code> + <code>LoginRequiredMixin</code></td>
+<td><code>/profile/edit/</code></td>
+<td><code>UserProfileUpdateForm</code></td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>UserPasswordChangeView</code></td>
+<td><code>PasswordChangeView</code> + <code>LoginRequiredMixin</code></td>
+<td><code>/password_change/</code></td>
+<td><code>UserPasswordChangeForm</code></td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>CustomPasswordResetView</code></td>
+<td><code>PasswordResetView</code></td>
+<td><code>/password-reset/</code></td>
+<td><code>CustomPasswordResetForm</code></td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>CustomPasswordResetDoneView</code></td>
+<td><code>PasswordResetDoneView</code></td>
+<td><code>/password-reset/done/</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>CustomPasswordResetConfirmView</code></td>
+<td><code>PasswordResetConfirmView</code></td>
+<td><code>/reset/&lt;uidb64&gt;/&lt;token&gt;/</code></td>
+<td><code>CustomSetPasswordForm</code></td>
+</tr>
+<tr>
+<td>View</td>
+<td><code>CustomPasswordResetCompleteView</code></td>
+<td><code>PasswordResetCompleteView</code></td>
+<td><code>/reset/done/</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Forms</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Form</td>
+<td><code>UserLoginForm</code></td>
+<td><code>AuthenticationForm</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Form</td>
+<td><code>UserRegisterForm</code></td>
+<td><code>UserCreationForm</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Form</td>
+<td><code>UserProfileUpdateForm</code></td>
+<td><code>ModelForm</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Form</td>
+<td><code>UserPasswordChangeForm</code></td>
+<td><code>PasswordChangeForm</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Form</td>
+<td><code>CustomPasswordResetForm</code></td>
+<td><code>PasswordResetForm</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Form</td>
+<td><code>CustomSetPasswordForm</code></td>
+<td><code>SetPasswordForm</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Templates</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>register.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>login.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>profile_detail.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>profile_update_form.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>password_change_form.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>password_reset_form.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>password_reset_done.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>password_reset_confirm.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>password_reset_complete.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Template</td>
+<td><code>password_reset_email.html</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+  <p>[!warning]</p>
+  <h3 id="критерии-проверки-👌">Критерии проверки 👌</h3>
+  <ol>
+  <li><p><strong>Настройка проекта и базовый функционал (4 балла)</strong></p>
+  <ul>
+  <li>Приложение <code>users</code> создано, настроено и добавлено в <code>INSTALLED_APPS</code>.</li>
+  <li>В <code>settings.py</code> корректно настроен <code>EMAIL_BACKEND</code> для вывода в консоль.</li>
+  <li>Реализованы представления для регистрации, входа, выхода, просмотра и редактирования профиля, а также смены пароля (<code>UserRegisterView</code>, <code>UserLoginView</code>, <code>UserLogoutView</code>, <code>UserProfileDetailView</code>, <code>UserProfileUpdateView</code>, <code>UserPasswordChangeView</code>).</li>
+  <li>Все соответствующие формы (<code>UserRegisterForm</code>, <code>UserLoginForm</code>, <code>UserProfileUpdateForm</code>, <code>UserPasswordChangeForm</code>) созданы, унаследованы от правильных классов и стилизованы с помощью виджетов и классов Bootstrap 5.</li></ul></li>
+  <li><p><strong>Реализация восстановления пароля (5 баллов)</strong></p>
+  <ul>
+  <li>Реализованы все четыре обязательных представления для сброса пароля (<code>CustomPasswordResetView</code>, <code>CustomPasswordResetDoneView</code>, <code>CustomPasswordResetConfirmView</code>, <code>CustomPasswordResetCompleteView</code>).</li>
+  <li>Созданы и настроены кастомные формы <code>CustomPasswordResetForm</code> и <code>CustomSetPasswordForm</code>.</li>
+  <li>Созданы все пять необходимых шаблонов для процесса восстановления, включая <code>users/password_reset_email.html</code>.</li>
+  <li>Маршруты для восстановления пароля прописаны в <code>urls.py</code> и работают корректно.</li>
+  <li>Весь цикл восстановления пароля полностью функционален.</li></ul></li>
+  <li><p><strong>Шаблоны и интерфейс (2 балла)</strong></p>
+  <ul>
+  <li>Созданы все HTML-шаблоны, требуемые по заданию.</li>
+  <li>Шаблоны корректно наследуются от базового шаблона (если он есть).</li>
+  <li>Формы и кнопки стилизованы с использованием Bootstrap 5, интерфейс выглядит аккуратно.</li>
+  <li>Реализованы и корректно работают сообщения для пользователя (Django Messages Framework).</li></ul></li>
+  <li><p><strong>Тестирование и качество кода (1 балл)</strong></p>
+  <ul>
+  <li>К работе приложен обязательный скриншот письма для восстановления пароля из консоли.</li>
+  <li>Код хорошо структурирован, следует принципам DRY. Нет закомментированного или лишнего кода.</li></ul></li>
+  </ol>
+</blockquote></div>
+</body>
+</html>
+  
