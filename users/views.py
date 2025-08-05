@@ -23,7 +23,7 @@ from .forms import (
     UserRegisterForm,
     UserLoginForm,
     UserPasswordChangeForm,
-    ProfileUserForm
+    UserProfileUpdateForm
 )
 from django.contrib.auth.views import (
     LogoutView,
@@ -89,19 +89,20 @@ class NewLogoutView(LogoutView):
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
-    form_class = ProfileUserForm
-    template_name = 'users/profile_detail.html'
+    form_class = UserProfileUpdateForm
+    template_name = 'users/profile_edit.html'
     extra_context = {'title': "Профиль пользователя"}
 
     def get_success_url(self):
-        return reverse_lazy('users:profile', args=[self.request.user.pk])
+        return reverse_lazy(args=[self.request.user.pk])
+        # return reverse_lazy('users:profile', args=[self.request.user.pk])
     
     def get_object(self, queryset=None):
         return self.request.user
     
 class UserProfileDetailView(LoginRequiredMixin, DetailView):
     model = get_user_model()
-    form_class = ProfileUserForm
+    form_class = UserProfileUpdateForm
     template_name = 'users/profile_detail.html'
     extra_context = {'title': "Профиль пользователя"}
 
@@ -120,21 +121,6 @@ class UserPasswordChangeView(PasswordChangeView):
 class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
     template_name = "users/password_changed.html"
 
-
-
-
-
-    # @method_decorator(login_required)
-    # def dispatch(self, *args, **kwargs):
-    #     return super().dispatch(*args, **kwargs)
-
-
-
-# class CustomPasswordChangeView(PasswordChangeView):
-#     template_name = "users/password_change_form.html"
-#     form_class = UserPasswordChangeForm
-#     success_url = "/"
-
 class CustomPasswordResetView(PasswordResetView):
     """
     Шаг 2. - Старт процесса сброса пароля - ввод email пользователя
@@ -151,7 +137,7 @@ class CustomPasswordResetDoneView(PasswordResetDoneView):
     """
 
     template_name = "users/password_reset_done.html"
-    # TODO - Есть ли тут success_url?
+    
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     """Шаг 5. - Ввод нового пароля"""

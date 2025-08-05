@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% comment %} {% block title %}Личный кабинет...{% endblock %} {% endcomment %}
+
+{% comment %} <form method="post">
+    {% csrf_token %}
+    <div class="form-error">{{ form.non_field_errors }}</div>
+    {% for f in form %}
+        <p ><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+        <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+
+    <p ><button type="submit">Сохранить</button></p>
+</form> {% endcomment %}
+
+{% block content %}   
+    <div class="card border-0">  
+        <h3>Личный кабинет</h3>
+        
+        <div class="card-body">  
+            <div class="row">  
+                <div class="col-md-3">  
+                    <figure>  
+                        <img src="{{ profile.avatar.url }}" class="img-fluid rounded-0" alt="{{ profile }}">  
+                    </figure>  
+                    </div>  
+                    {% csrf_token %}                    
+                    <div class="col-md-9">  
+                        <h5 class="card-title">  {{ username }} </h5>  
+                    <div class="card-text">  
+                    {% comment %} <ul>   {% endcomment %}
+                        <li><span class="btn btn-danger"style="width:150px ">Никнейм:</span> <span > {{ user.username }} </span></li>  
+                        <br>
+                        <li><span class="btn btn-warning" style="width:150px ">E-mail:</span> <span > {{ user.email }}  </span></li>  
+                        <br>
+                        <li><span class="btn btn-success"style="width:150px ">Заходил:</span> <span > {{ user.last_login }} </span></li>  
+                        <br>
+                        {% comment %} <li>Дата рождения: {{ profile.birth_date }}</li>  
+                        <li>О себе: {{ profile.bio }}</li>   {% endcomment %}
+                    </ul>  
+                    <a href="{% url 'change_password' %}" class="btn btn-sm btn-primary">Сменить пароль</a>  
+                    <a href="{% url 'password_reset' %}" class="btn btn-sm btn-primary">Сбросить пароль</a>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+{% endblock %}   
+
+{% comment %} {% block content %}
+
+    <div class="header-bar">
+        <h1>Profile</h
+        
+        <a href="{% url 'tasks' %}">&#8592; Back</a>
+        
+    </div>
+    
+    <div class="card-body">
+    {% if user.profile.profile_pic %}
+      <img src="{{ profile.profile_pic.url }}" height=100 width=100><br><br>
+    {% else %}
+      <img src="{% static 'base\images\profile\user.png' %}" height=100 width=100><br><br>
+    {% endif %}
+      <p><strong>Username:</strong> {{ page_user }}</p><br><br>
+      <p><strong>Bio:</strong> {{ profile.bio }}</p><br><br>
+      {% if profile.twitter %}
+      <p><strong>Twitter:</strong> {{ profile.twitter }}</p><br><br>
+      {% endif %}
+      {% if profile.instagram %}
+      <p><strong>Instagram:</strong> {{ profile.instagram }}</p><br><br>
+      {% endif %}
+      {% if profile.facebook %}
+      <p><strong>Facebook:</strong> {{ profile.facebook }}</p><br><br>
+      {% endif %}
+
+      {% if user.id == profile.user.id %}
+      <a href="{% url 'edit_user_profile' profile.id %}"><button class="button">Edit</button></a>
+      {% endif %}
+      
+    
+    
+    </div>
+
+{% endblock content %} {% endcomment %}

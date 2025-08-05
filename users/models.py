@@ -16,14 +16,7 @@ class CustomUser(AbstractUser):
         null=True,
         verbose_name="Аватар",
     )
-    tg_id = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name="Telegram ID",
-        unique=True,
-        help_text="Уникальный идентификатор пользователя в Telegram",
-    )
+    
     vk_id = models.CharField(
         max_length=255,
         blank=True,
@@ -32,3 +25,25 @@ class CustomUser(AbstractUser):
         unique=True,
         help_text="Уникальный идентификатор пользователя в VK",
     )
+    telegram_id = models.CharField(    
+        blank=True,
+        null=True,
+        verbose_name="Telegram ID",
+        unique=True,
+        help_text="Уникальный идентификатор пользователя в Telegram",
+    )
+    github_id = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="GitHub ID",
+        unique=True,
+        help_text="Уникальный идентификатор пользователя в GitHub",
+    )
+    birth_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Дата рождения",
+        help_text="Дата рождения пользователя",
+    )
+

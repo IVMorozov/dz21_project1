@@ -43,6 +43,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = 'users.CustomUser'
+
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -199,7 +201,8 @@ LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("landing") # Куда перенаправить после успешного входа
 LOGOUT_REDIRECT_URL = reverse_lazy("landing") # Куда перенаправить после выхода
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465

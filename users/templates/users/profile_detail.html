@@ -28,7 +28,7 @@
                     <div class="col-md-9">  
                         <h5 class="card-title">  {{ username }} </h5>  
                     <div class="card-text">  
-                    <ul>  
+                    {% comment %} <ul>   {% endcomment %}
                         <li><span class="btn btn-danger"style="width:150px ">Никнейм:</span> <span > {{ user.username }} </span></li>  
                         <br>
                         <li><span class="btn btn-warning" style="width:150px ">E-mail:</span> <span > {{ user.email }}  </span></li>  
@@ -39,6 +39,7 @@
                         <li>О себе: {{ profile.bio }}</li>   {% endcomment %}
                     </ul>  
                     <a href="{% url 'change_password' %}" class="btn btn-sm btn-primary">Сменить пароль</a>  
+                    
                 </div>  
             </div>  
         </div>  

@@ -5,13 +5,12 @@ from django.contrib.auth.forms import (
     PasswordChangeForm,
     PasswordResetForm,
     SetPasswordForm,
-    )
+)
 
 from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
 
 user_model = get_user_model()
-
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(
@@ -45,20 +44,6 @@ class UserLoginForm(AuthenticationForm):
             {"class": "form-control", "placeholder": "Пароль"}
         )
 
-
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     username = cleaned_data.get("username")
-    #     password = cleaned_data.get("password")
-
-    #     if username and password:
-    #         user = authenticate(username=username, password=password)
-    #         if user is None:
-    #             raise forms.ValidationError("Неверное имя пользователя или пароль.")
-    #         # Сохраняем пользователя в форме для последующего использования во вью
-    #         self.user_cache = user
-    #     return cleaned_data
-
 class UserPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -72,7 +57,6 @@ class UserPasswordChangeForm(PasswordChangeForm):
             {"class": "form-control", "placeholder": "Подтвердите новый пароль"}
         )
 
-    # Проверка что старый пароль НЕ равно новый пароль 1
     def clean(self):
         cleaned_data = super().clean()
         old_password = cleaned_data.get("old_password")
@@ -82,29 +66,32 @@ class UserPasswordChangeForm(PasswordChangeForm):
                 "Новый пароль не должен совпадать со старым паролем."
             )
         return cleaned_data
-    
-class UserProfileUpdateForm(forms.ModelForm):
-    username = forms.CharField(disabled=True, label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    email = forms.CharField(disabled=True, label='E-mail', widget=forms.TextInput(attrs={'class': 'form-input'}))
 
+class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name']
-        labels = {
-            'first_name': 'Имя',
-            'last_name': 'Фамилия',
-        }
+        fields = ['username', 'email', 'avatar', 'birth_date', 'telegram_id', 'github_id']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-input'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-input'}),
+            'username': forms.TextInput(attrs={'class': "form-control"}), 
+            'email': forms.EmailInput(attrs={'class': "form-control"}),
+            'avatar': forms.FileInput(attrs={'class': "form-control"}),
+            'birth_date': forms.DateInput(attrs={'class': "form-control"}),
+            'telegram_id': forms.TextInput(attrs={'class': "form-control"}), 
+            'github_id': forms.TextInput(attrs={'class': "form-control"}),
+        }
+
+class ProfileUserForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['avatar', 'birth_date', 'telegram_id', 'github_id']
+        widgets = {
+            'avatar': forms.FileInput(attrs={'class': "form-control"}),
+            'birth_date': forms.DateInput(attrs={'class': "form-control"}),
+            'telegram_id': forms.TextInput(attrs={'class': "form-control"}),
+            'github_id': forms.TextInput(attrs={'class': "form-control"}),
         }
 
 class CustomPasswordResetForm(PasswordResetForm):
-    """
-    Форма для сброса пароля по email. Шаг 2.
-    Ввод емейла аккаунта для старта процесса сброса пароля.
-    """
-
     email = forms.EmailField(
         label="Email",
         required=True,
@@ -118,10 +105,6 @@ class CustomPasswordResetForm(PasswordResetForm):
             field.widget.attrs["placeholder"] = field.label or ""
 
 class CustomSetPasswordForm(SetPasswordForm):
-    """
-    Форма для сброса пароля по email. Шаг 5.
-    Ввод нового пароля без указания старого.
-    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
