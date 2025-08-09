@@ -12,3 +12,4 @@ barbershop/.env
 barbershop.db
 barbershop/.env
 barbershop/.env.example
+barbershop/.env
