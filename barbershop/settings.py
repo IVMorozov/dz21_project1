@@ -40,20 +40,20 @@ DEBUG = os.getenv("DEBUG", "False") == "TRUE"
 # DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     "127.0.0.1",
-    "188.225.37.43",
-    "192.168.0.4",
-    "ivmorozov-dz21-project1-b15d.twc1.net",
-    "ivmorozov-dz21-project1-b15d.twc1.net/?roistat_visit=4043667"
+    "194.87.118.222",
+    "2a03:6f00:a::1:1daf",
+
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1:8000",
-    "http://88.225.37.43",
-    "https://88.225.37.43",    
-    "http://192.168.0.4",
-    "http://ivmorozov-dz21-project1-b15d.twc1.net",
-    "https://ivmorozov-dz21-project1-b15d.twc1.net",
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://194.87.118.222',
+    'https://194.87.118.222',
+    'http://exception-blog.ru',
+    'https://exception-blog.ru'
 ]
 
 

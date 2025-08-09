@@ -8,4 +8,4 @@ barbershop\.env
 .env
 
 barbershop/.env.example
-
+barbershop.db
