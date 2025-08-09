@@ -36,9 +36,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-$+7hao5@8)++o-ryejxwo^1zqg0^=nkbt)5tty(t^ijzr(@iq0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "TRUE"
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "188.225.37.43",
+    "192.168.0.4",
+    "ivmorozov-dz21-project1-b15d.twc1.net",
+    "http://ivmorozov-dz21-project1-b15d.twc1.net/"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://88.225.37.43",
+    "http://192.168.0.4",
+    "http://ivmorozov-dz21-project1-b15d.twc1.net",
+]
 
 
 # Application definition
@@ -212,3 +226,5 @@ EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv("EMAIL")
 SERVER_EMAIL = os.getenv("EMAIL")
 EMAIL_ADMIN = os.getenv("EMAIL")
+
+AUTH_USER_MODEL = "users.CustomUser"
