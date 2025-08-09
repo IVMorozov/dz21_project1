@@ -3,13 +3,9 @@
 __pycache__
 notes/images/
 db.sqlite3
-# barbershop.db
 barbershop\test.py
 barbershop\.env
 .env
-barbershop/.env
 
-barbershop.db
-barbershop/.env
 barbershop/.env.example
-barbershop/.env
+
