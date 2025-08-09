@@ -44,15 +44,19 @@ ALLOWED_HOSTS = [
     "188.225.37.43",
     "192.168.0.4",
     "ivmorozov-dz21-project1-b15d.twc1.net",
-    "http://ivmorozov-dz21-project1-b15d.twc1.net/"
+    "ivmorozov-dz21-project1-b15d.twc1.net/?roistat_visit=4043667"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://88.225.37.43",
+    "https://88.225.37.43",    
     "http://192.168.0.4",
     "http://ivmorozov-dz21-project1-b15d.twc1.net",
+    "https://ivmorozov-dz21-project1-b15d.twc1.net",
 ]
+
+
 
 
 # Application definition
