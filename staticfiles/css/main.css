@@ -1,0 +1,58 @@
+body {
+    height: calc(100vh + 50px);
+}
+
+header .navbar  div{
+    text-align: center;
+    background-color: #f2e765;    
+    max-width: 67.5%;
+}
+
+
+
+footer { 
+    padding: 10px;
+    text-align: center;
+    height: 40px;
+    background: #f2e765;
+    color: rgb(14, 13, 13);
+    font-size: 12px;
+    max-width: 67.5%;   
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.menu_img {
+    height: 60px;
+    width: 100px;
+}
+
+.menu_head {
+    background: black;
+    color: white;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    align-items: center;    
+};
+
+.menu_cont {    
+    margin: auto;
+    height: 70%
+    
+};
+
+.menu_cont a {
+    text-align: center;
+    font-size: 10px;
+};
+
+.toast-container {
+  z-index: 1055 !important; /* Важно, чтобы быть поверх других элементов */
+};
+
+
+
+
+
