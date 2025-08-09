@@ -6,3 +6,5 @@ pillow
 django-jazzmin
 mistralai
 python-telegram-bot
+pytz
+dotenv
