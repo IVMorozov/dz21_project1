@@ -42,16 +42,16 @@ DEBUG = os.getenv("DEBUG", "False") == "TRUE"
 ALLOWED_HOSTS = [
     'localhost',
     "127.0.0.1",
-    "194.87.118.222",
-    "2a03:6f00:a::1:1daf",
+    "77.233.221.4",
+    
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
-    'http://194.87.118.222',
-    'https://194.87.118.222',
+    'http://77.233.221.4',
+    'https://77.233.221.4',
     'http://exception-blog.ru',
     'https://exception-blog.ru'
 ]
