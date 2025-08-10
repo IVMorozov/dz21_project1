@@ -1,0 +1,74 @@
+# Название нашего workflow для отображения в интерфейсе GitHub
+name: Deploy to VPS
+
+# Указываем когда запускать - при push в main ветку
+on:
+  push:
+    branches: [ main ]
+
+# Определяем задачи для выполнения 
+jobs:
+  deploy:
+    # Указываем на какой ОС запускать
+    runs-on: ubuntu-latest
+
+    steps:
+      # Получаем код из репозитория
+      - uses: actions/checkout@v3
+
+      # Деплоим на сервер через SSH
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          # Используем секреты из GitHub для подключения
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+
+          # Команды выполняемые на сервере
+          script: |
+            # Переходим в директорию проекта
+            cd /home/v/dz21_project1
+
+            # Останавливаем службу приложения  (с sudo и передачей пароля)
+            echo "${{ secrets.PASSWORD }}" | sudo -S systemctl stop gunicorn_django_consult
+
+            # Обновляем код из репозитория (с sudo и передачей пароля)
+            echo "${{ secrets.PASSWORD }}" | git pull
+
+            # Если у вас PIP
+            # Активируем виртуальное окружение
+            # source venv/bin/activate
+
+            # Обновляем зависимости
+            # pip install -r requirements.txt
+
+            # Если у вас Poetry
+            /home/v/.local/bin/poetry install --no-root
+            
+
+            # Тут можно добавить команду для создания миграций
+            /home/v/.local/bin/poetry run python manage.py migrate
+
+
+            # Создаем файл .env из секрета где записано все его содержимое
+            echo "${{ secrets.ENV_FILE }}" > .env
+
+            # Собираем статику 
+            /home/v/.local/bin/poetry run python manage.py collectstatic --noinput
+
+            # Перезапускаем systemd сервис (с sudo и передачей пароля)
+            echo "${{ secrets.PASSWORD }}" | sudo -S systemctl start gunicorn_django_consult
+
+            # Создаем директории, если их нет.
+            mkdir -p /home/v/dz21_project1/staticfiles 
+            mkdir -p /home/v/dz21_project1/media
+
+            
+            # Устанавливаем права доступа к директориям
+            chmod 755 /home/v/dz21_project1/staticfiles
+            chmod 755 /home/v/dz21_project1/media
+
+            # Устанавливаем владельца и группу для директорий
+            sudo chown -R v:www-data /home/v/dz21_project1/staticfiles
+            sudo chown -R v:www-data /home/v/dz21_project1/media
