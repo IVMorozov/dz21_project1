@@ -43,6 +43,8 @@ ALLOWED_HOSTS = [
     'localhost',
     "127.0.0.1",
     "77.233.221.4",
+    '24miv-test.ru',
+    'www.24miv-test.ru'
     
 
 ]
@@ -52,8 +54,10 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
     'http://77.233.221.4',
     'https://77.233.221.4',
-    'http://exception-blog.ru',
-    'https://exception-blog.ru'
+    'http://24miv-test.ru',
+    'http://www.24miv-test.ru',
+    'https://24miv-test.ru',
+    'https://www.24miv-test.ru'
 ]
 
 
